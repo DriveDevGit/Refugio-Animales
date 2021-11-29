@@ -1,20 +1,46 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package refugio.view;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 /**
  *
  * @author Jairo
+ * @description Clase principal que ejecutará el programa
  */
-public class RefugioApp {
+public class RefugioApp extends Application{
 
-    /**
-     * @param args the command line arguments
-     */
+    private double xOffset = 0.0;
+    private double yOffset = 0.0;
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+        
+        root.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged((MouseEvent event) -> {
+            stage.setX(event.getSceneX() - xOffset);
+            stage.setY(event.getSceneY() - yOffset);
+        });
+
+        Scene scene = new Scene(root);
+
+        stage.setTitle("KeepTooDash");
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static void main(String[] args) {
-        // TODO code application logic here
+        launch(args);
     }
     
 }

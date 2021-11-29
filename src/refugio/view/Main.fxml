@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="refugio.controller.MainController">
+   <children>
+      <HBox alignment="TOP_RIGHT" prefHeight="98.0" prefWidth="600.0" style="-fx-background-color: #ba181b;">
+         <children>
+            <FontAwesomeIconView fx:id="icnClose" fill="#f5f3f4" glyphName="CLOSE" onMouseClicked="#handleClose" size="20">
+               <HBox.margin>
+                  <Insets right="5.0" top="5.0" />
+               </HBox.margin>
+            </FontAwesomeIconView>
+         </children></HBox>
+   </children>
+</AnchorPane>
