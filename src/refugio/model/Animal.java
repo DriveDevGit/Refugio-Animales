@@ -40,6 +40,18 @@ public class Animal {
         this.caract = caract;
     }
 
+    public Animal(String nombre, char sexo, String color, int razaId, double peso, String caract) {
+        this.nombre = nombre;
+        this.sexo = sexo;
+        this.color = color;
+        this.razaId = razaId;
+        this.caract = caract;
+        
+        this.fechanac="";
+        this.especie="";
+        this.raza="";
+    }
+    
     public Animal(String nombre, char sexo, String color, String especie, String raza, double peso, String caract) {
         this.nombre = nombre;
         this.sexo = sexo;
@@ -66,8 +78,7 @@ public class Animal {
         this.color = color;
         this.peso = peso;
         this.caract = caract;
-    }
-    
+    }    
 
     public int getId() {
         return id;
@@ -174,15 +185,35 @@ public class Animal {
             case 4: return "Bengalí";
             case 5: return "Angora turco";
             case 6: return "Siberiano";
-            case 7: return "Buildog";
+            case 7: return "Bulldog";
             case 8: return "Labrador";
             case 9: return "Caniche";
-            case 10: return "Pasto alemán";
+            case 10: return "Pastor alemán";
             case 11: return "Chihuahua";
             case 12: return "Terrier";
             case 14: return "Perro genérico";
             case 15: return "Gato genérico";
             default: return "Desconocido";
+        }
+    }
+    
+    public static int toRazaInteger(String raza){
+        switch(raza){
+            case "Siamés": return 1;
+            case "Persa": return 2;
+            case "Siberiano": return 3;
+            case "Bengalí": return 4;
+            case "Angora turco": return 5;
+            case "Siberiano2": return 6;
+            case "Bulldog": return 7;
+            case "Labrador": return 8;
+            case "Caniche": return 9;
+            case "Pastor alemán": return 10;
+            case "Chihuahua": return 11;
+            case "Terrier": return 12;
+            case "Perro genérico": return 14;
+            case "Gato genérico": return 15;
+            default: return 0;
         }
     }
     

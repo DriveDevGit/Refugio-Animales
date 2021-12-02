@@ -2,9 +2,11 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,16 +15,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="refugio.controller.MainController">
    <children>
-      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
-         <children>
-            <Label fx:id="lblImageView" layoutX="21.0" layoutY="243.0" text="¡Ayúdanos a encontrar un hogar para estos hermosos animales!">
-               <font>
-                  <Font name="Caviar Dreams Bold" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
       <Pane fx:id="banner" prefHeight="98.0" prefWidth="600.0" style="-fx-background-color: E03616 A4161A;">
          <children>
             <FontAwesomeIconView fx:id="icnClose" fill="#f5f3f4" glyphName="CLOSE" layoutX="573.0" layoutY="28.0" onMouseClicked="#handleClose" size="20" />
@@ -36,6 +28,7 @@
             </Label>
             <FontAwesomeIconView fill="#f5f3f4" glyphName="HEART" layoutX="192.0" layoutY="44.0" rotate="25.0" size="24" wrappingWidth="27.199951171875" />
             <Button fx:id="aboutme" layoutX="300.0" layoutY="59.0" mnemonicParsing="false" stylesheets="@../css/dash.css" text="Sobre nosotros" textFill="#f5f3f4" />
+            <Button fx:id="insert" layoutX="162.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionInsert" stylesheets="@../css/dash.css" text="Alta" textFill="#f5f3f4" />
          </children>
       </Pane>
       <Pane fx:id="paneAdoption" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
@@ -51,6 +44,32 @@
                   <TableColumn fx:id="caractCol" prefWidth="132.800048828125" text="Características" />
               </columns>
             </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="paneInsert" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <TextField fx:id="fieldNombreAlta" layoutX="14.0" layoutY="63.0" promptText="Nombre" />
+            <ComboBox fx:id="sexoBoxAlta" layoutX="13.0" layoutY="128.0" prefWidth="150.0" promptText="Sexo" />
+            <TextField fx:id="colorFieldAlta" layoutX="191.0" layoutY="63.0" promptText="Color" />
+            <ComboBox fx:id="razaBoxAlta" layoutX="190.0" layoutY="128.0" prefWidth="150.0" promptText="Raza" />
+            <TextField fx:id="pesoFieldAlta" layoutX="363.0" layoutY="63.0" promptText="Peso" />
+            <TextArea fx:id="caractFieldAlta" layoutX="363.0" layoutY="128.0" prefHeight="64.0" prefWidth="200.0" promptText="Características..." />
+            <Button layoutX="489.0" layoutY="253.0" mnemonicParsing="false" onAction="#subirAnimal" stylesheets="@../css/dash.css" text="Dar de alta" />
+            <Label fx:id="lblErrorAlta" layoutX="420.0" layoutY="229.0" text="Rellene todos los campos" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label fx:id="lblImageView" layoutX="41.0" layoutY="237.0" prefHeight="24.0" prefWidth="519.0" text="¡Gracias por confiar en ADOPT ME!, observa estas ofertas!">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
    </children>

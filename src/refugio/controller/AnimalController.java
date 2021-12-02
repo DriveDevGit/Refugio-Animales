@@ -17,4 +17,8 @@ public class AnimalController {
     public AnimalController(GenericoDAO controller) {
         this.animalDAO = controller;
     }
+    
+    public void insertarAnimal(Animal animal){
+        animalDAO.insert(animal);
+    }
 }

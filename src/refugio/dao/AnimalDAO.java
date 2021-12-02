@@ -56,8 +56,29 @@ public class AnimalDAO implements GenericoDAO {
     }
 
     @Override
-    public Object insert(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void insert(Object t) {
+        try(Connection connection = ConnectionManager.getInstance().getConnection();
+            Statement sentencia = connection.createStatement()){
+            
+            Animal animal = (Animal) t;
+            
+            String nombre = animal.getNombre();
+            char sexo = animal.getSexo();
+            String color = animal.getColor();
+            int idraza = animal.getRazaId();
+            double peso = animal.getPeso();
+            String caract = animal.getCaract();
+            
+            System.out.println(nombre+ " " + sexo + " " + color + " " + idraza + " " + peso + " " + caract);
+            
+            /*ResultSet resultado = sentencia.executeQuery("INSERT INTO table_name " +
+                                                          "VALUES (value1, value2, value3, ...);");*/
+                       
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            System.err.println("Error");
+        }
     }
 
     @Override

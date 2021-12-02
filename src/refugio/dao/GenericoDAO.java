@@ -9,7 +9,7 @@ import java.util.Collection;
 public interface GenericoDAO<T, ID> {
     T read(ID id);
     Collection<T> getAll();
-    ID insert(T t);
+    void insert(T t);
     void update (T t);
     void delete (T t);
     void deleteByID (ID id);

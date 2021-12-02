@@ -4,17 +4,19 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.Collection;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
@@ -22,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import refugio.dao.AnimalDAO;
 import refugio.model.Animal;
+import static refugio.model.Animal.toRazaInteger;
 
 /**
  * FXML Controller class
@@ -33,7 +36,15 @@ import refugio.model.Animal;
 public class MainController implements Initializable {
 
     private AnimalDAO dao;
+    private AnimalController AController;
     private boolean tablaMostrada = false;
+    
+    private ObservableList<String> generos = FXCollections.observableArrayList("Macho", "Hembra");
+    private ObservableList<String> razas = FXCollections.observableArrayList("Siamés", "Persa", "Siberiano",
+                                                                        "Bengalí", "Angora Turco", "Siberiano2",
+                                                                        "Bulldog", "Labrador", "Caniche",
+                                                                        "Pastor alemán", "Chihuahua", "Terrier",
+                                                                        "Perro genérico", "Gato genérico");
 
     @FXML
     private FontAwesomeIconView icnClose;
@@ -71,12 +82,37 @@ public class MainController implements Initializable {
     private Pane paneIndex;
     @FXML
     private TableColumn<Animal, String> especieCol;
+    @FXML
+    private Button insert;
+    @FXML
+    private Pane paneInsert;
+    @FXML
+    private TextField fieldNombreAlta;
+    @FXML
+    private ComboBox<String> sexoBoxAlta;
+    @FXML
+    private TextField colorFieldAlta;
+    @FXML
+    private ComboBox<String> razaBoxAlta;
+    @FXML
+    private TextField pesoFieldAlta;
+    @FXML
+    private TextArea caractFieldAlta;
+    @FXML
+    private Label lblErrorAlta;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         paneIndex.toFront();
+        
+        sexoBoxAlta.setItems(generos);
+        razaBoxAlta.setItems(razas);
     }
 
+    /**
+     *
+     * @param event El ActionListener cerrará el programa.
+     */
     @FXML
     private void handleClose(MouseEvent event) {
         if (event.getSource() == icnClose) {
@@ -125,6 +161,15 @@ public class MainController implements Initializable {
     }
 
     /**
+     *
+     * @param event El ActionListener cambiará a la pestaña de insertar
+     */
+    @FXML
+    private void actionInsert(ActionEvent event) {
+        paneInsert.toFront();
+    }
+
+    /**
      * Método que nos servirá para simplifar el código. Este método rellena la
      * tabla de animales y activa el filtro.
      */
@@ -156,6 +201,8 @@ public class MainController implements Initializable {
                     return true;
                 } else if (animal.getCaract().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
+                } else if (animal.getRaza().toLowerCase().contains(lowerCaseFilter)){
+                    return true;
                 }
                 return false;
             });
@@ -165,6 +212,27 @@ public class MainController implements Initializable {
 
         datosOrdenados.comparatorProperty().bind(tableList.comparatorProperty());
         tableList.setItems(datosOrdenados);
+    }
+
+    @FXML
+    private void subirAnimal(ActionEvent event) {
+        AController = new AnimalController(dao);
+        
+        if(fieldNombreAlta.getText().equals("") || colorFieldAlta.getText().equals("")
+                || pesoFieldAlta.getText().equals("") || caractFieldAlta.getText().equals("")){
+            lblErrorAlta.setVisible(true);
+        }
+        else if(sexoBoxAlta.getSelectionModel().isEmpty() || razaBoxAlta.getSelectionModel().isEmpty()){
+            lblErrorAlta.setVisible(true);
+        }
+        else{
+            Animal animal = new Animal(fieldNombreAlta.getText(),sexoBoxAlta.getValue().charAt(0), colorFieldAlta.getText(), toRazaInteger(razaBoxAlta.getValue()),
+                                        Double.parseDouble(pesoFieldAlta.getText()), caractFieldAlta.getText());
+            System.out.println(animal);
+            AController.insertarAnimal(animal);
+            lblErrorAlta.setVisible(false);
+        }
+        
     }
 
 }
