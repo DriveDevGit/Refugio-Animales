@@ -10,7 +10,7 @@ import javafx.stage.StageStyle;
 /**
  *
  * @author Jairo
- * @description Clase principal que ejecutará el programa
+ * @description Clase principal que ejecutará el programa.
  */
 public class RefugioApp extends Application{
 
@@ -33,7 +33,7 @@ public class RefugioApp extends Application{
 
         Scene scene = new Scene(root);
 
-        stage.setTitle("KeepTooDash");
+        stage.setTitle("Refugio");
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
