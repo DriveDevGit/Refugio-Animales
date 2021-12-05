@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -100,6 +101,8 @@ public class MainController implements Initializable {
     private TextArea caractFieldAlta;
     @FXML
     private Label lblErrorAlta;
+    @FXML
+    private DatePicker fechaNac;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -222,13 +225,15 @@ public class MainController implements Initializable {
                 || pesoFieldAlta.getText().equals("") || caractFieldAlta.getText().equals("")){
             lblErrorAlta.setVisible(true);
         }
-        else if(sexoBoxAlta.getSelectionModel().isEmpty() || razaBoxAlta.getSelectionModel().isEmpty()){
+        else if(sexoBoxAlta.getSelectionModel().isEmpty() || razaBoxAlta.getSelectionModel().isEmpty() || fechaNac.getValue() == null){
+            lblErrorAlta.setVisible(true);
+        }
+        else if(pesoFieldAlta.getText().charAt(0) < 48 || pesoFieldAlta.getText().charAt(0) > 57){
             lblErrorAlta.setVisible(true);
         }
         else{
-            Animal animal = new Animal(fieldNombreAlta.getText(),sexoBoxAlta.getValue().charAt(0), colorFieldAlta.getText(), toRazaInteger(razaBoxAlta.getValue()),
+            Animal animal = new Animal(fieldNombreAlta.getText(),sexoBoxAlta.getValue().charAt(0), fechaNac.getValue(),colorFieldAlta.getText(), toRazaInteger(razaBoxAlta.getValue()),
                                         Double.parseDouble(pesoFieldAlta.getText()), caractFieldAlta.getText());
-            System.out.println(animal);
             AController.insertarAnimal(animal);
             lblErrorAlta.setVisible(false);
         }

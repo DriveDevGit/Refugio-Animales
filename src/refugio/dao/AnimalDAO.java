@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -61,20 +63,23 @@ public class AnimalDAO implements GenericoDAO {
             Statement sentencia = connection.createStatement()){
             
             Animal animal = (Animal) t;
+            LocalDate timeNow = LocalDate.now();
             
             String nombre = animal.getNombre();
             char sexo = animal.getSexo();
+            String fechaNac = animal.getFechanac();
             String color = animal.getColor();
             int idraza = animal.getRazaId();
             double peso = animal.getPeso();
+            String fechaAlta = timeNow.format(DateTimeFormatter.ISO_DATE);
             String caract = animal.getCaract();
             
-            System.out.println(nombre+ " " + sexo + " " + color + " " + idraza + " " + peso + " " + caract);
+            System.out.println(nombre+ " " + sexo + " " + fechaNac + " " + color + " " + idraza + " " + peso + " " + fechaAlta+ " " + caract);
             
-            /*ResultSet resultado = sentencia.executeQuery("INSERT INTO table_name " +
-                                                          "VALUES (value1, value2, value3, ...);");*/
-                       
-            
+            sentencia.executeUpdate("INSERT INTO animal (nombre, sexo, fecha_nac, color_predominante, id_raza_predominante, peso, fecha_arribo, características)" +
+                                                            "VALUES ('"+nombre+"','"+sexo+"','"+fechaNac+"','"+color+"',"+idraza+","+peso+",'"+fechaAlta+"','"+caract+"');");
+
+                              
         }catch(SQLException ex){
             ex.printStackTrace();
             System.err.println("Error");

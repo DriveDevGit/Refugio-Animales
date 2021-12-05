@@ -1,5 +1,8 @@
 package refugio.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  *
  * @author Jairo
@@ -40,16 +43,25 @@ public class Animal {
         this.caract = caract;
     }
 
-    public Animal(String nombre, char sexo, String color, int razaId, double peso, String caract) {
+    /**
+     * Constructor que nos servirá para insertar datos
+     * 
+     * @param nombre
+     * @param sexo
+     * @param fechanac
+     * @param color
+     * @param razaId
+     * @param peso
+     * @param caract 
+     */
+    public Animal(String nombre, char sexo, LocalDate fechanac, String color, int razaId, double peso, String caract) {
         this.nombre = nombre;
         this.sexo = sexo;
+        this.fechanac = fechanac.format(DateTimeFormatter.ISO_DATE);
         this.color = color;
         this.razaId = razaId;
+        this.peso=peso;
         this.caract = caract;
-        
-        this.fechanac="";
-        this.especie="";
-        this.raza="";
     }
     
     public Animal(String nombre, char sexo, String color, String especie, String raza, double peso, String caract) {

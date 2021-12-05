@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -46,6 +47,16 @@
             </TableView>
          </children>
       </Pane>
+      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label fx:id="lblImageView" layoutX="41.0" layoutY="237.0" prefHeight="24.0" prefWidth="519.0" text="¡Gracias por confiar en ADOPT ME!, observa estas ofertas!">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
       <Pane fx:id="paneInsert" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
             <TextField fx:id="fieldNombreAlta" layoutX="14.0" layoutY="63.0" promptText="Nombre" />
@@ -55,21 +66,12 @@
             <TextField fx:id="pesoFieldAlta" layoutX="363.0" layoutY="63.0" promptText="Peso" />
             <TextArea fx:id="caractFieldAlta" layoutX="363.0" layoutY="128.0" prefHeight="64.0" prefWidth="200.0" promptText="Características..." />
             <Button layoutX="489.0" layoutY="253.0" mnemonicParsing="false" onAction="#subirAnimal" stylesheets="@../css/dash.css" text="Dar de alta" />
-            <Label fx:id="lblErrorAlta" layoutX="420.0" layoutY="229.0" text="Rellene todos los campos" textFill="RED" visible="false">
+            <Label fx:id="lblErrorAlta" layoutX="316.0" layoutY="223.0" text="Rellene todos los campos de forma correcta" textFill="RED" visible="false">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
-         <children>
-            <Label fx:id="lblImageView" layoutX="41.0" layoutY="237.0" prefHeight="24.0" prefWidth="519.0" text="¡Gracias por confiar en ADOPT ME!, observa estas ofertas!">
-               <font>
-                  <Font name="Caviar Dreams Bold" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <DatePicker fx:id="fechaNac" layoutX="13.0" layoutY="180.0" promptText="Fecha nacimiento" />
          </children>
       </Pane>
    </children>

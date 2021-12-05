@@ -1,6 +1,7 @@
 package refugio.controller;
 
 import java.util.Collection;
+import refugio.dao.AnimalDAO;
 import refugio.dao.GenericoDAO;
 import refugio.model.Animal;
 
@@ -19,6 +20,7 @@ public class AnimalController {
     }
     
     public void insertarAnimal(Animal animal){
+        animalDAO = new AnimalDAO();
         animalDAO.insert(animal);
     }
 }
