@@ -47,16 +47,6 @@
             </TableView>
          </children>
       </Pane>
-      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
-         <children>
-            <Label fx:id="lblImageView" layoutX="41.0" layoutY="237.0" prefHeight="24.0" prefWidth="519.0" text="¡Gracias por confiar en ADOPT ME!, observa estas ofertas!">
-               <font>
-                  <Font name="Caviar Dreams Bold" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
       <Pane fx:id="paneInsert" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
             <TextField fx:id="fieldNombreAlta" layoutX="14.0" layoutY="63.0" promptText="Nombre" />
@@ -72,6 +62,45 @@
                </font>
             </Label>
             <DatePicker fx:id="fechaNac" layoutX="13.0" layoutY="180.0" promptText="Fecha nacimiento" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label fx:id="lblImageView" layoutX="41.0" layoutY="237.0" prefHeight="24.0" prefWidth="519.0" text="¡Gracias por confiar en ADOPT ME!, observa estas ofertas!">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneDatos" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label fx:id="nombreAnimal" layoutX="14.0" layoutY="28.0" text="Relleno Nombre">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="sexoAnimal" layoutX="14.0" layoutY="55.0" text="Relleno Sexo">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="razaAnimal" layoutX="14.0" layoutY="82.0" text="Relleno Raza">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="caractAnimal" layoutX="14.0" layoutY="139.0" text="Relleno Características">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="fechaNacAnimal" layoutX="14.0" layoutY="109.0" text="Relleno Nac">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

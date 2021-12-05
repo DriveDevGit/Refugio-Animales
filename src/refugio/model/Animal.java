@@ -14,7 +14,7 @@ public class Animal {
     private int id;
     private String nombre;
     private char sexo;
-    private String fechanac;
+    private String fechaNac;
     private String color;
     private int razaId;
     private String raza;
@@ -27,18 +27,20 @@ public class Animal {
         id=this.id;
         nombre=this.nombre;
         sexo=this.sexo;
-        fechanac=this.fechanac;
+        fechaNac=this.fechaNac;
         color=this.color;
         raza=this.raza;
         peso=this.peso;
         caract=this.caract;
     }
 
-    public Animal(int id, String nombre, char sexo, String color, double peso, String caract) {
+    public Animal(int id, String nombre, char sexo, String fechaNac, String color, String raza, double peso, String caract) {
         this.id = id;
         this.nombre = nombre;
         this.sexo = sexo;
+        this.fechaNac=fechaNac;
         this.color = color;
+        this.raza = raza;
         this.peso = peso;
         this.caract = caract;
     }
@@ -57,41 +59,13 @@ public class Animal {
     public Animal(String nombre, char sexo, LocalDate fechanac, String color, int razaId, double peso, String caract) {
         this.nombre = nombre;
         this.sexo = sexo;
-        this.fechanac = fechanac.format(DateTimeFormatter.ISO_DATE);
+        this.fechaNac = fechanac.format(DateTimeFormatter.ISO_DATE);
         this.color = color;
         this.razaId = razaId;
         this.peso=peso;
         this.caract = caract;
     }
     
-    public Animal(String nombre, char sexo, String color, String especie, String raza, double peso, String caract) {
-        this.nombre = nombre;
-        this.sexo = sexo;
-        this.color = color;
-        this.especie = especie;
-        this.raza = raza;
-        this.peso = peso;
-        this.caract = caract;
-    }
-    
-    public Animal(String nombre, char sexo, String color, String raza, double peso, String caract) {
-        this.nombre = nombre;
-        this.sexo = sexo;
-        this.color = color;
-        this.raza = raza;
-        this.peso = peso;
-        this.caract = caract;
-    }
-    
-
-    public Animal(String nombre, char sexo, String color, double peso, String caract) {
-        this.nombre = nombre;
-        this.sexo = sexo;
-        this.color = color;
-        this.peso = peso;
-        this.caract = caract;
-    }    
-
     public int getId() {
         return id;
     }
@@ -117,11 +91,11 @@ public class Animal {
     }
 
     public String getFechanac() {
-        return fechanac;
+        return fechaNac;
     }
 
     public void setFechanac(String fechanac) {
-        this.fechanac = fechanac;
+        this.fechaNac = fechanac;
     }
 
     public String getColor() {

@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -39,13 +41,14 @@ public class MainController implements Initializable {
     private AnimalDAO dao;
     private AnimalController AController;
     private boolean tablaMostrada = false;
-    
+    private Animal animalClic;
+
     private ObservableList<String> generos = FXCollections.observableArrayList("Macho", "Hembra");
     private ObservableList<String> razas = FXCollections.observableArrayList("Siamés", "Persa", "Siberiano",
-                                                                        "Bengalí", "Angora Turco", "Siberiano2",
-                                                                        "Bulldog", "Labrador", "Caniche",
-                                                                        "Pastor alemán", "Chihuahua", "Terrier",
-                                                                        "Perro genérico", "Gato genérico");
+            "Bengalí", "Angora Turco", "Siberiano2",
+            "Bulldog", "Labrador", "Caniche",
+            "Pastor alemán", "Chihuahua", "Terrier",
+            "Perro genérico", "Gato genérico");
 
     @FXML
     private FontAwesomeIconView icnClose;
@@ -103,11 +106,23 @@ public class MainController implements Initializable {
     private Label lblErrorAlta;
     @FXML
     private DatePicker fechaNac;
+    @FXML
+    private Pane paneDatos;
+    @FXML
+    private Label nombreAnimal;
+    @FXML
+    private Label sexoAnimal;
+    @FXML
+    private Label razaAnimal;
+    @FXML
+    private Label caractAnimal;
+    @FXML
+    private Label fechaNacAnimal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         paneIndex.toFront();
-        
+
         sexoBoxAlta.setItems(generos);
         razaBoxAlta.setItems(razas);
     }
@@ -204,7 +219,7 @@ public class MainController implements Initializable {
                     return true;
                 } else if (animal.getCaract().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (animal.getRaza().toLowerCase().contains(lowerCaseFilter)){
+                } else if (animal.getRaza().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
                 return false;
@@ -215,29 +230,66 @@ public class MainController implements Initializable {
 
         datosOrdenados.comparatorProperty().bind(tableList.comparatorProperty());
         tableList.setItems(datosOrdenados);
+
+        /**
+         * Esta clase interna nos dará la posibilidad de darle doble clic a una
+         * fila para poder acceder a un nuevo panel.
+         */
+        tableList.setRowFactory(tv -> {
+            TableRow<Animal> row = new TableRow<>();
+            row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                        Animal animalClicked = row.getItem();
+                        animalClic = animalClicked;
+                        actualizarPanelDatos(animalClicked);
+                        paneDatos.toFront();
+                    }
+                }
+            });
+            return row;
+        });
     }
 
+    /**
+     * Método que nos servirá para dar de alta a un animal.
+     *
+     * @param event
+     */
     @FXML
     private void subirAnimal(ActionEvent event) {
         AController = new AnimalController(dao);
-        
-        if(fieldNombreAlta.getText().equals("") || colorFieldAlta.getText().equals("")
-                || pesoFieldAlta.getText().equals("") || caractFieldAlta.getText().equals("")){
+
+        if (fieldNombreAlta.getText().equals("") || colorFieldAlta.getText().equals("")
+                || pesoFieldAlta.getText().equals("") || caractFieldAlta.getText().equals("")) {
             lblErrorAlta.setVisible(true);
-        }
-        else if(sexoBoxAlta.getSelectionModel().isEmpty() || razaBoxAlta.getSelectionModel().isEmpty() || fechaNac.getValue() == null){
+        } else if (sexoBoxAlta.getSelectionModel().isEmpty() || razaBoxAlta.getSelectionModel().isEmpty() || fechaNac.getValue() == null) {
             lblErrorAlta.setVisible(true);
-        }
-        else if(pesoFieldAlta.getText().charAt(0) < 48 || pesoFieldAlta.getText().charAt(0) > 57){
+        } else if (pesoFieldAlta.getText().charAt(0) < 48 || pesoFieldAlta.getText().charAt(0) > 57) {
             lblErrorAlta.setVisible(true);
-        }
-        else{
-            Animal animal = new Animal(fieldNombreAlta.getText(),sexoBoxAlta.getValue().charAt(0), fechaNac.getValue(),colorFieldAlta.getText(), toRazaInteger(razaBoxAlta.getValue()),
-                                        Double.parseDouble(pesoFieldAlta.getText()), caractFieldAlta.getText());
+        } else {
+            Animal animal = new Animal(fieldNombreAlta.getText(), sexoBoxAlta.getValue().charAt(0), fechaNac.getValue(), colorFieldAlta.getText(), toRazaInteger(razaBoxAlta.getValue()),
+                    Double.parseDouble(pesoFieldAlta.getText()), caractFieldAlta.getText());
             AController.insertarAnimal(animal);
             lblErrorAlta.setVisible(false);
         }
+
+    }
+    
+    private void actualizarPanelDatos(Animal animal){
+        nombreAnimal.setText(animal.getNombre());
         
+        if(animal.getSexo()=='M'){
+            sexoAnimal.setText("Macho");
+        }
+        else{
+            sexoAnimal.setText("Hembra");
+        }
+        
+        razaAnimal.setText(animal.getRaza());
+        fechaNacAnimal.setText(animal.getFechanac());
+        caractAnimal.setText(animal.getCaract());
     }
 
 }
