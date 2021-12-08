@@ -26,8 +26,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import refugio.dao.AnimalDAO;
+import refugio.dao.DosisDAO;
+import refugio.dao.GenericoDAO;
 import refugio.model.Animal;
 import static refugio.model.Animal.toRazaInteger;
+import refugio.model.Dosis;
 
 /**
  * FXML Controller class
@@ -38,7 +41,7 @@ import static refugio.model.Animal.toRazaInteger;
  */
 public class MainController implements Initializable {
 
-    private AnimalDAO dao;
+    private GenericoDAO dao;
     private AnimalController AController;
     private boolean tablaMostrada = false;
     private Animal animalClic;
@@ -118,6 +121,12 @@ public class MainController implements Initializable {
     private Label caractAnimal;
     @FXML
     private Label fechaNacAnimal;
+    @FXML
+    private TableView<Dosis> tablaDosis;
+    @FXML
+    private TableColumn<Dosis, String> vacunaColumna;
+    @FXML
+    private TableColumn<Dosis, String> fechaVacunaColumna;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -241,9 +250,11 @@ public class MainController implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                        Animal animalClicked = row.getItem();
+                        Animal animalClicked = row.getItem();                                              
                         animalClic = animalClicked;
-                        actualizarPanelDatos(animalClicked);
+                        dao = new DosisDAO();                        
+                        Collection<Dosis> dosisList = dao.getAll(animalClic);
+                        actualizarPanelDatos(animalClicked, dosisList);
                         paneDatos.toFront();
                     }
                 }
@@ -277,7 +288,8 @@ public class MainController implements Initializable {
 
     }
     
-    private void actualizarPanelDatos(Animal animal){
+    private void actualizarPanelDatos(Animal animal, Collection dosis){
+        
         nombreAnimal.setText(animal.getNombre());
         
         if(animal.getSexo()=='M'){
@@ -290,6 +302,11 @@ public class MainController implements Initializable {
         razaAnimal.setText(animal.getRaza());
         fechaNacAnimal.setText(animal.getFechanac());
         caractAnimal.setText(animal.getCaract());
+        
+        tablaDosis.getItems().clear();
+        vacunaColumna.setCellValueFactory(new PropertyValueFactory<Dosis, String>("Vacuna"));
+        fechaVacunaColumna.setCellValueFactory(new PropertyValueFactory<Dosis, String>("Fecha"));
+        tablaDosis.getItems().addAll(dosis);
     }
 
 }

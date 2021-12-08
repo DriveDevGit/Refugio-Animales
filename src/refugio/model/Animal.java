@@ -2,6 +2,7 @@ package refugio.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 /**
  *
@@ -33,7 +34,19 @@ public class Animal {
         peso=this.peso;
         caract=this.caract;
     }
-
+    
+    /**
+     * Constructor que nos servirá para recoger datos.
+     * 
+     * @param id
+     * @param nombre
+     * @param sexo
+     * @param fechaNac
+     * @param color
+     * @param raza
+     * @param peso
+     * @param caract 
+     */
     public Animal(int id, String nombre, char sexo, String fechaNac, String color, String raza, double peso, String caract) {
         this.id = id;
         this.nombre = nombre;
@@ -46,7 +59,7 @@ public class Animal {
     }
 
     /**
-     * Constructor que nos servirá para insertar datos
+     * Constructor que nos servirá para insertar datos.
      * 
      * @param nombre
      * @param sexo
@@ -65,7 +78,7 @@ public class Animal {
         this.peso=peso;
         this.caract = caract;
     }
-    
+        
     public int getId() {
         return id;
     }

@@ -101,6 +101,12 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <TableView fx:id="tablaDosis" layoutX="16.0" layoutY="166.0" prefHeight="136.0" prefWidth="556.0">
+              <columns>
+                <TableColumn fx:id="vacunaColumna" prefWidth="278.39996337890625" text="Vacuna" />
+                <TableColumn fx:id="fechaVacunaColumna" prefWidth="276.800048828125" text="Fecha" />
+              </columns>
+            </TableView>
          </children>
       </Pane>
    </children>

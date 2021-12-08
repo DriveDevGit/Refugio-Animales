@@ -1,13 +1,15 @@
 package refugio.dao;
 
 import java.util.Collection;
+import refugio.model.Animal;
 
 /**
  *
  * @author Jairo
  */
 public interface GenericoDAO<T, ID> {
-    T read(ID id);
+    T read(Animal id);
+    Collection<T>getAll(Animal t);
     Collection<T> getAll();
     void insert(T t);
     void update (T t);

@@ -2,8 +2,10 @@ package refugio.controller;
 
 import java.util.Collection;
 import refugio.dao.AnimalDAO;
+import refugio.dao.DosisDAO;
 import refugio.dao.GenericoDAO;
 import refugio.model.Animal;
+import refugio.model.Dosis;
 
 /**
  *
@@ -13,14 +15,23 @@ import refugio.model.Animal;
  */
 public class AnimalController {
 
-    private GenericoDAO animalDAO;
+    private GenericoDAO dao;
 
     public AnimalController(GenericoDAO controller) {
-        this.animalDAO = controller;
+        this.dao = controller;
+    }
+      
+    public void insertarAnimal(Animal animal){
+        dao = new AnimalDAO();
+        dao.insert(animal);
     }
     
-    public void insertarAnimal(Animal animal){
-        animalDAO = new AnimalDAO();
-        animalDAO.insert(animal);
+    public Dosis obtenerDosis(Animal animal){
+        dao = new DosisDAO();
+        return (Dosis) dao.getAll(animal);
+    }
+    
+    public void vacunasObligatorias(){
+        
     }
 }

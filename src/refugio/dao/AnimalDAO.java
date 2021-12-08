@@ -23,7 +23,7 @@ import refugio.util.ConnectionManager;
 public class AnimalDAO implements GenericoDAO {
 
     @Override
-    public Object read(Object id) {
+    public Object read(Animal id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -104,6 +104,11 @@ public class AnimalDAO implements GenericoDAO {
 
     @Override
     public void deleteByID(Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Collection getAll(Animal t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
