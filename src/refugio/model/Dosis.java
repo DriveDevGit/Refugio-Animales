@@ -7,8 +7,10 @@ package refugio.model;
 public class Dosis {
     private int id_animal;
     private int id_vacuna;
+    private int id_especie;
     private String vacuna;
     private String fecha;
+    private boolean esencial;
 
     public Dosis() {
     }
@@ -18,6 +20,31 @@ public class Dosis {
         this.vacuna = vacuna;
         this.fecha = fecha;
     }
+    
+    public Dosis(int id_animal, int id_especie, String fecha, boolean esencial){
+        this.id_animal = id_animal;
+        this.id_especie = id_especie;
+        this.fecha = fecha;
+        this.esencial = esencial;
+    }
+
+    public int getId_especie() {
+        return id_especie;
+    }
+
+    public void setId_especie(int id_especie) {
+        this.id_especie = id_especie;
+    }
+
+    public boolean isEsencial() {
+        return esencial;
+    }
+
+    public void setEsencial(boolean esencial) {
+        this.esencial = esencial;
+    }
+    
+    
 
     public int getId_animal() {
         return id_animal;

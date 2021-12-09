@@ -283,6 +283,7 @@ public class MainController implements Initializable {
             Animal animal = new Animal(fieldNombreAlta.getText(), sexoBoxAlta.getValue().charAt(0), fechaNac.getValue(), colorFieldAlta.getText(), toRazaInteger(razaBoxAlta.getValue()),
                     Double.parseDouble(pesoFieldAlta.getText()), caractFieldAlta.getText());
             AController.insertarAnimal(animal);
+            AController.vacunasObligatorias();
             lblErrorAlta.setVisible(false);
         }
 

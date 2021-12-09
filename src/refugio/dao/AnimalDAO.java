@@ -24,14 +24,28 @@ public class AnimalDAO implements GenericoDAO {
 
     @Override
     public Object read(Animal id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement()) {
+
+            ResultSet resultado = sentencia.executeQuery("SELECT A.`id`, R.`idespecie` FROM `animal` A JOIN `raza` R ON (A.`id_raza_predominante`=R.`id`) ORDER BY `id` ASC;");
+
+            while (resultado.next()) {
+                int id_animal = resultado.getInt("id");
+                int id_especie = resultado.getInt("idespecie");
+                id = new Animal(id_animal, id_especie);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.err.println("Error");
+        }
+        return id;
     }
-    
+
     /**
      * Método que nos servirá para recoger todos los datos de los animales
-     * 
-     * @return 
-     */   
+     *
+     * @return
+     */
     @Override
     public List<Animal> getAll() {
         List animales = new ArrayList();
@@ -61,11 +75,11 @@ public class AnimalDAO implements GenericoDAO {
         }
         return animales;
     }
-    
+
     /**
      * Método que nos servirá para dar de alta a los animales.
-     * 
-     * @param t 
+     *
+     * @param t
      */
     @Override
     public void insert(Object t) {

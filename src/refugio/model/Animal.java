@@ -78,7 +78,17 @@ public class Animal {
         this.peso=peso;
         this.caract = caract;
     }
-        
+    
+    /**
+     * Constructor que nos servirá para recoger exclusivamente el id del animal.
+     * 
+     * @param id 
+     */
+    public Animal(int id, int idespecie) {
+        this.id = id;
+        this.especieId = idespecie;
+    }
+            
     public int getId() {
         return id;
     }

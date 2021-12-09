@@ -22,8 +22,8 @@ import refugio.util.ConnectionManager;
  *
  * @author Jairo
  */
-public class DosisDAO implements GenericoDAO{
-    
+public class DosisDAO implements GenericoDAO {
+
     private AnimalController AController;
 
     @Override
@@ -31,14 +31,14 @@ public class DosisDAO implements GenericoDAO{
         Dosis dosis = new Dosis();
         try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement()) {
 
-            ResultSet resultado = sentencia.executeQuery("SELECT id_vacuna, fecha FROM `dosis` D JOIN `animal` A ON (A.id=D.id_animal) WHERE D.id_animal="+t.getId()+";");
+            ResultSet resultado = sentencia.executeQuery("SELECT id_vacuna, fecha FROM `dosis` D JOIN `animal` A ON (A.id=D.id_animal) WHERE D.id_animal=" + t.getId() + ";");
 
             while (resultado.next()) {
                 int id_animal = t.getId();
                 String vacuna = toIdVacunaString(resultado.getInt("id_vacuna"));
                 String fecha = resultado.getString("fecha");
-                
-                dosis = new Dosis (id_animal, vacuna, fecha);
+
+                dosis = new Dosis(id_animal, vacuna, fecha);
             }
 
         } catch (SQLException ex) {
@@ -47,20 +47,20 @@ public class DosisDAO implements GenericoDAO{
         }
         return dosis;
     }
-    
+
     @Override
     public Collection getAll(Animal t) {
         List dosisList = new ArrayList();
 
         try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement()) {
-            ResultSet resultado = sentencia.executeQuery("SELECT id_vacuna, fecha FROM `dosis` D JOIN `animal` A ON (A.id=D.id_animal) WHERE D.id_animal="+t.getId()+";");
+            ResultSet resultado = sentencia.executeQuery("SELECT id_vacuna, fecha FROM `dosis` D JOIN `animal` A ON (A.id=D.id_animal) WHERE D.id_animal=" + t.getId() + ";");
 
             while (resultado.next()) {
                 int id_animal = t.getId();
                 String vacuna = toIdVacunaString(resultado.getInt("id_vacuna"));
                 String fecha = resultado.getString("fecha");
-                
-                Dosis dosis = new Dosis (id_animal, vacuna, fecha);
+
+                Dosis dosis = new Dosis(id_animal, vacuna, fecha);
                 dosisList.add(dosis);
             }
 
@@ -68,7 +68,7 @@ public class DosisDAO implements GenericoDAO{
             ex.printStackTrace();
             System.err.println("Error");
         }
-        return  dosisList;
+        return dosisList;
     }
 
     @Override
@@ -78,7 +78,38 @@ public class DosisDAO implements GenericoDAO{
 
     @Override
     public void insert(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement();
+                Statement sentencia2 = connection.createStatement();) {
+
+            Dosis dosis = (Dosis) t;
+            int id_animal = dosis.getId_animal();
+            int id_especie = dosis.getId_especie();
+            String fecha = dosis.getFecha();
+            boolean esencial = dosis.isEsencial();
+            
+            if (esencial == true) {
+                if (id_especie == 1) {
+                    ResultSet resultado = sentencia.executeQuery("SELECT V.`id` FROM `vacuna` V JOIN vacuna_especie E ON (V.id=E.id_vacuna) WHERE V.escencial=1 AND E.id_especie=1;");
+                    
+                    while (resultado.next()) {
+                        int id_vacuna = resultado.getInt("id");
+                        sentencia2.executeUpdate("INSERT INTO dosis (id_animal, id_vacuna, fecha) VALUES (" + id_animal + "," + id_vacuna + ",'" + fecha + "');");
+                    }
+                } else {
+                    ResultSet resultado = sentencia.executeQuery("SELECT V.`id` FROM `vacuna` V JOIN vacuna_especie E ON (V.id=E.id_vacuna) WHERE V.escencial=1 AND E.id_especie=2;");
+                    while (resultado.next()) {
+                        int id_vacuna = resultado.getInt("id");
+                        sentencia2.executeUpdate("INSERT INTO dosis (id_animal, id_vacuna, fecha) VALUES (" + id_animal + "," + id_vacuna + ",'" + fecha + "');");
+                    }
+
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.err.println("Error");
+        }
     }
 
     @Override
@@ -95,5 +126,5 @@ public class DosisDAO implements GenericoDAO{
     public void deleteByID(Object id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
