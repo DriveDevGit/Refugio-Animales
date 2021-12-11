@@ -21,12 +21,12 @@ import refugio.util.ConnectionManager;
  * todos sus datos.
  */
 public class AnimalDAO implements GenericoDAO {
-    
+
     /**
      * Método que me devuelve la id y la especie del último animal insertado.
-     * 
+     *
      * @param id
-     * @return 
+     * @return
      */
     @Override
     public Object read(Animal id) {
@@ -123,8 +123,8 @@ public class AnimalDAO implements GenericoDAO {
             String nombre = animal.getNombre();
             String caract = animal.getCaract();
 
-            sentencia.executeUpdate("UPDATE animal SET nombre = '"+nombre+"', características = '"+caract+"' WHERE id="+id+";");
-            
+            sentencia.executeUpdate("UPDATE animal SET nombre = '" + nombre + "', características = '" + caract + "' WHERE id=" + id + ";");
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("Error");
@@ -137,23 +137,45 @@ public class AnimalDAO implements GenericoDAO {
     }
 
     @Override
-    public Object get() {
+    public void get(int idespecie) {
         Object animal = new Animal();
-        try (Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement()) {
+        try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement(); 
+                Statement sentencia2 = connection.createStatement()) {
             
-            ResultSet resultado = sentencia.executeQuery("SELECT * FROM `animal` ORDER BY fecha_arribo DESC;");
+            int id_animal=0;
+            LocalDate timeNow = LocalDate.now();
+            String fechaAdopcion = timeNow.format(DateTimeFormatter.ISO_DATE);
 
-            while (resultado.next()) {
-                int id_animal = resultado.getInt("id");
-                int id_especie = resultado.getInt("idespecie");
-                animal = new Animal(id_animal, id_especie);
+            if (idespecie == 1) {
+                ResultSet resultado = sentencia.executeQuery("SELECT * FROM `animal` A JOIN `raza` R ON (A.id_raza_predominante=R.id) WHERE R.idespecie=1 AND fecha_adopcion IS NULL ORDER BY fecha_arribo DESC;");
+
+                while (resultado.next()) {
+                    id_animal = resultado.getInt("id");
+                }
+                
+                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='"+fechaAdopcion+"' WHERE id=" + id_animal + ";");
+            } else if (idespecie == 2) {
+                ResultSet resultado = sentencia.executeQuery("SELECT * FROM `animal` A JOIN `raza` R ON (A.id_raza_predominante=R.id) WHERE R.idespecie=2 AND fecha_adopcion IS NULL ORDER BY fecha_arribo DESC;");
+
+                while (resultado.next()) {
+                    id_animal = resultado.getInt("id");
+                }
+                
+                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='"+fechaAdopcion+"' WHERE id=" + id_animal + ";");
+            } else {
+                ResultSet resultado = sentencia.executeQuery("SELECT id FROM `animal` WHERE fecha_adopcion IS NULL ORDER BY fecha_arribo DESC;");
+
+                while (resultado.next()) {
+                    id_animal = resultado.getInt("id");
+                }
+                
+                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='"+fechaAdopcion+"' WHERE id=" + id_animal + ";");
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("Error");
         }
-        return animal;
     }
 
 }

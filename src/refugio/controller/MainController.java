@@ -149,8 +149,6 @@ public class MainController implements Initializable {
     @FXML
     private Pane paneAdoptar;
     @FXML
-    private Label prueba;
-    @FXML
     private Button editar;
     @FXML
     private Pane paneEditar;
@@ -178,6 +176,8 @@ public class MainController implements Initializable {
     private Label lblVacunaVacia;
     @FXML
     private Label lblExitoInsertar;
+    @FXML
+    private Label lblGracias;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -249,6 +249,15 @@ public class MainController implements Initializable {
     @FXML
     private void actionInsert(ActionEvent event) {
         paneInsert.toFront();
+    }
+    
+    /**
+     * 
+     * @param event El ActionListener cambiará a la pestaña de adoptar.
+     */
+    @FXML
+    private void actionAdoptar(ActionEvent event) {
+        paneAdoptar.toFront();
     }
 
     /**
@@ -456,16 +465,49 @@ public class MainController implements Initializable {
         }
     }
     
+    /**
+     * La siguiente lista de métodos son acciones Drag and Drop, las cuales
+     * se usan para arrastrar ciertos label y poder adoptar un perro, un gato
+     * o un animal
+     */
     @FXML
-    private void adoptarOver(DragEvent event) {
+    private void adoptarOver(DragEvent event) {      
+        if (event.getGestureSource() != lblGracias
+                && event.getDragboard().hasString()) {
+
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+
+        event.consume();
     }
 
     @FXML
     private void adoptarDrop(DragEvent event) {
+        AController = new AnimalController(dao);
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        if (db.getString().equals("Perro")) {
+            AController.adoptarAnimal(1);
+            System.out.println("Perro");
+            success = true;
+        }else if(db.getString().equals("Gato")){
+            AController.adoptarAnimal(2);
+            System.out.println("Gato");
+            success = true;
+        }else if(db.getString().equals("Animal")){
+            AController.adoptarAnimal(5);
+            System.out.println("Animal");
+            success = true;
+        }
+        
+        event.setDropCompleted(success);
+        lblGracias.setVisible(true);
+        event.consume();
     }
 
     @FXML
     private void perroDetected(MouseEvent event) {
+        lblGracias.setVisible(false);
         Dragboard db = lblPerro.startDragAndDrop(TransferMode.ANY);
 
         ClipboardContent content = new ClipboardContent();
@@ -489,6 +531,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void gatoDetected(MouseEvent event) {
+        lblGracias.setVisible(false);
         Dragboard db = lblGato.startDragAndDrop(TransferMode.ANY);
 
         ClipboardContent content = new ClipboardContent();
@@ -500,7 +543,6 @@ public class MainController implements Initializable {
 
     @FXML
     private void gatoDone(DragEvent event) {
-
         if (event.getTransferMode() == TransferMode.MOVE) {
             lblGato.setText("");
         }
@@ -512,6 +554,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void animalDetected(MouseEvent event) {
+        lblGracias.setVisible(false);
         Dragboard db = lblAnimal.startDragAndDrop(TransferMode.ANY);
 
         ClipboardContent content = new ClipboardContent();
@@ -523,43 +566,11 @@ public class MainController implements Initializable {
 
     @FXML
     private void animalDone(DragEvent event) {
-
         if (event.getTransferMode() == TransferMode.MOVE) {
             lblAnimal.setText("");
         }
 
         event.consume();
         lblAnimal.setText("Animal");
-    }
-
-    @FXML
-    private void actionAdoptar(ActionEvent event) {
-        paneAdoptar.toFront();
-    }
-
-    @FXML
-    private void pruebaOver(DragEvent event) {
-
-        if (event.getGestureSource() != prueba
-                && event.getDragboard().hasString()) {
-
-            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-        }
-
-        event.consume();
-    }
-
-    @FXML
-    private void pruebaDrop(DragEvent event) {
-        Dragboard db = event.getDragboard();
-        boolean success = false;
-        if (db.hasString()) {
-            prueba.setText(db.getString());
-            success = true;
-        }
-
-        event.setDropCompleted(success);
-
-        event.consume();
     }
 }

@@ -79,7 +79,7 @@ public class DosisDAO implements GenericoDAO {
 
     @Override
     public List<Dosis> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -124,11 +124,11 @@ public class DosisDAO implements GenericoDAO {
 
     @Override
     public void update(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Object get() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void get(int id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -79,46 +79,6 @@
             <Label layoutX="16.0" layoutY="11.0" text="ID:" />
          </children>
       </Pane>
-      <Pane fx:id="paneAdoptar" layoutX="-1.0" layoutY="93.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
-         <children>
-            <Button fx:id="botonAdoptar" layoutX="225.0" layoutY="217.0" mnemonicParsing="false" onDragDropped="#adoptarDrop" onDragOver="#adoptarOver" prefHeight="57.0" prefWidth="150.0" stylesheets="@../css/dash.css" text="Adoptar">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Label fx:id="lblPerro" layoutX="14.0" layoutY="14.0" onDragDetected="#perroDetected" onDragDone="#perroDone" text="Perro">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblGato" layoutX="243.0" layoutY="14.0" onDragDetected="#gatoDetected" onDragDone="#gatoDone" text="Gato">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblAnimal" layoutX="438.0" layoutY="14.0" onDragDetected="#animalDetected" onDragDone="#animalDone" text="Animal">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Label fx:id="prueba" layoutX="280.0" layoutY="175.0" onDragDropped="#pruebaDrop" onDragOver="#pruebaOver" text="Prueba" />
-         </children>
-      </Pane>
-      <Pane fx:id="paneAdoption" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
-         <children>
-            <TableView fx:id="tableList" prefHeight="300.0" prefWidth="600.0">
-              <columns>
-                <TableColumn fx:id="nameCol" prefWidth="75.0" text="Nombre" />
-                <TableColumn fx:id="genreCol" prefWidth="75.0" text="Sexo" />
-                  <TableColumn fx:id="colorCol" prefWidth="75.0" text="Color" />
-                  <TableColumn fx:id="especieCol" prefWidth="79.20001220703125" text="Especie" />
-                  <TableColumn fx:id="raceCol" prefWidth="106.39996337890625" text="Raza" />
-                  <TableColumn fx:id="weightCol" prefWidth="52.79998779296875" text="Peso" />
-                  <TableColumn fx:id="caractCol" prefWidth="132.800048828125" text="Características" />
-              </columns>
-            </TableView>
-         </children>
-      </Pane>
       <Pane fx:id="banner" prefHeight="98.0" prefWidth="600.0" style="-fx-background-color: E03616 A4161A;">
          <children>
             <FontAwesomeIconView fx:id="icnClose" fill="#f5f3f4" glyphName="CLOSE" layoutX="573.0" layoutY="28.0" onMouseClicked="#handleClose" size="20" />
@@ -188,16 +148,6 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
-         <children>
-            <Label fx:id="lblImageView" layoutX="41.0" layoutY="237.0" prefHeight="24.0" prefWidth="519.0" text="¡Gracias por confiar en ADOPT ME!, observa estas ofertas!">
-               <font>
-                  <Font name="Caviar Dreams Bold" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
       <Pane fx:id="paneEditar" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
             <Label layoutX="14.0" layoutY="55.0" text="Sexo:" textFill="#e03616">
@@ -262,6 +212,59 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label fx:id="lblImageView" layoutX="41.0" layoutY="237.0" prefHeight="24.0" prefWidth="519.0" text="¡Gracias por confiar en ADOPT ME!, observa estas ofertas!">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneAdoption" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <TableView fx:id="tableList" prefHeight="300.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="nameCol" prefWidth="75.0" text="Nombre" />
+                <TableColumn fx:id="genreCol" prefWidth="75.0" text="Sexo" />
+                  <TableColumn fx:id="colorCol" prefWidth="75.0" text="Color" />
+                  <TableColumn fx:id="especieCol" prefWidth="79.20001220703125" text="Especie" />
+                  <TableColumn fx:id="raceCol" prefWidth="106.39996337890625" text="Raza" />
+                  <TableColumn fx:id="weightCol" prefWidth="52.79998779296875" text="Peso" />
+                  <TableColumn fx:id="caractCol" prefWidth="132.800048828125" text="Características" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="paneAdoptar" layoutX="-1.0" layoutY="93.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Button fx:id="botonAdoptar" layoutX="225.0" layoutY="217.0" mnemonicParsing="false" onDragDropped="#adoptarDrop" onDragOver="#adoptarOver" prefHeight="57.0" prefWidth="150.0" stylesheets="@../css/dash.css" text="Adoptar">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Label fx:id="lblPerro" layoutX="14.0" layoutY="14.0" onDragDetected="#perroDetected" onDragDone="#perroDone" text="Perro">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblGato" layoutX="243.0" layoutY="14.0" onDragDetected="#gatoDetected" onDragDone="#gatoDone" text="Gato">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAnimal" layoutX="438.0" layoutY="14.0" onDragDetected="#animalDetected" onDragDone="#animalDone" text="Animal">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblGracias" layoutX="109.0" layoutY="121.0" prefHeight="64.0" prefWidth="382.0" text="¡El animal ha sido adoptado!" textFill="#58d902" visible="false">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font></Label>
          </children>
       </Pane>
    </children>

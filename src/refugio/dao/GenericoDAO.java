@@ -11,7 +11,7 @@ public interface GenericoDAO<T, ID> {
     T read(Animal id);
     Collection<T>getAll(Animal t);
     Collection<T> getAll();
-    T get();
+    void get(int id);
     void insert(T t);
     void update (T t);
 }

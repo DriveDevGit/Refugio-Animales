@@ -90,10 +90,11 @@ public class AnimalController {
         dao.update(animal);
     }
     
-    public void adoptarAnimal(){
-        Animal animal = new Animal();
+    /**
+     * Método que sirve para adoptar a un animal.
+     */
+    public void adoptarAnimal(int idespecie){
         dao = new AnimalDAO();
-        animal = (Animal) dao.get();
-        dao.update(animal);
+        dao.get(idespecie);
     }
 }
