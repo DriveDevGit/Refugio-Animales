@@ -47,12 +47,13 @@ public class Animal {
      * @param peso
      * @param caract 
      */
-    public Animal(int id, String nombre, char sexo, String fechaNac, String color, String raza, double peso, String caract) {
+    public Animal(int id, String nombre, char sexo, String fechaNac, String color, String especie, String raza, double peso, String caract) {
         this.id = id;
         this.nombre = nombre;
         this.sexo = sexo;
         this.fechaNac=fechaNac;
         this.color = color;
+        this.especie = especie;
         this.raza = raza;
         this.peso = peso;
         this.caract = caract;
@@ -88,7 +89,19 @@ public class Animal {
         this.id = id;
         this.especieId = idespecie;
     }
-            
+    
+    /**
+     * Constructor que nos servirá para editar los datos del animal.
+     * 
+     * @param nombre
+     * @param caract 
+     */
+    public Animal(int id, String nombre, String caract) {
+        this.id = id;
+        this.nombre = nombre;
+        this.caract = caract;
+    }
+          
     public int getId() {
         return id;
     }

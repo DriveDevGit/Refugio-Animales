@@ -11,8 +11,7 @@ public interface GenericoDAO<T, ID> {
     T read(Animal id);
     Collection<T>getAll(Animal t);
     Collection<T> getAll();
+    T get();
     void insert(T t);
     void update (T t);
-    void delete (T t);
-    void deleteByID (ID id);
 }

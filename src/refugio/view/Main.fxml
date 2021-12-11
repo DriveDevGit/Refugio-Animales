@@ -16,20 +16,92 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="refugio.controller.MainController">
    <children>
-      <Pane fx:id="banner" prefHeight="98.0" prefWidth="600.0" style="-fx-background-color: E03616 A4161A;">
+      <Pane fx:id="paneDatos" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
-            <FontAwesomeIconView fx:id="icnClose" fill="#f5f3f4" glyphName="CLOSE" layoutX="573.0" layoutY="28.0" onMouseClicked="#handleClose" size="20" />
-            <Button fx:id="index" layoutX="29.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionIndex" stylesheets="@../css/dash.css" text="Inicio" textFill="#f5f3f4" />
-            <Button fx:id="adoption" layoutX="84.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionListAdoption" stylesheets="@../css/dash.css" text="Adopción" textFill="#f5f3f4" />
-            <TextField fx:id="search" layoutX="424.0" layoutY="59.0" onMouseClicked="#clickSearch" promptText="Buscar" />
-            <Label layoutX="29.0" layoutY="12.0" prefHeight="37.0" prefWidth="177.0" text="ADOPT ME!" textFill="#f5f3f4">
+            <Label fx:id="nombreAnimal" layoutX="149.0" layoutY="28.0" text="Relleno Nombre">
                <font>
-                  <Font name="Bowlby One SC Regular" size="26.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <FontAwesomeIconView fill="#f5f3f4" glyphName="HEART" layoutX="192.0" layoutY="44.0" rotate="25.0" size="24" wrappingWidth="27.199951171875" />
-            <Button fx:id="aboutme" layoutX="300.0" layoutY="59.0" mnemonicParsing="false" stylesheets="@../css/dash.css" text="Sobre nosotros" textFill="#f5f3f4" />
-            <Button fx:id="insert" layoutX="162.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionInsert" stylesheets="@../css/dash.css" text="Alta" textFill="#f5f3f4" />
+            <Label layoutX="14.0" layoutY="55.0" text="Sexo:" textFill="#e03616">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="82.0" text="Raza" textFill="#e03616">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="139.0" text="Características:" textFill="#e03616">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="109.0" text="Fecha de nacimiento:" textFill="#e03616">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tablaDosis" layoutX="16.0" layoutY="166.0" prefHeight="136.0" prefWidth="556.0">
+              <columns>
+                <TableColumn fx:id="vacunaColumna" prefWidth="278.39996337890625" text="Vacuna" />
+                <TableColumn fx:id="fechaVacunaColumna" prefWidth="276.800048828125" text="Fecha" />
+              </columns>
+            </TableView>
+            <Label layoutX="15.0" layoutY="28.0" text="Nombre:" textFill="#e03616">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="sexoAnimal" layoutX="149.0" layoutY="55.0" text="Relleno Sexo">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="razaAnimal" layoutX="149.0" layoutY="82.0" text="Relleno Raza">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="fechaNacAnimal" layoutX="211.0" layoutY="109.0" text="Relleno Nac">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="caractAnimal" layoutX="211.0" layoutY="139.0" text="Relleno Características">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="editar" layoutX="540.0" layoutY="19.0" mnemonicParsing="false" onAction="#actionEditar" stylesheets="@../css/dash.css" text="Editar" textFill="#f5f3f4" />
+            <Label fx:id="idAnimal" layoutX="35.0" layoutY="11.0" text="Relleno id" />
+            <Label layoutX="16.0" layoutY="11.0" text="ID:" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneAdoptar" layoutX="-1.0" layoutY="93.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Button fx:id="botonAdoptar" layoutX="225.0" layoutY="217.0" mnemonicParsing="false" onDragDropped="#adoptarDrop" onDragOver="#adoptarOver" prefHeight="57.0" prefWidth="150.0" stylesheets="@../css/dash.css" text="Adoptar">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Label fx:id="lblPerro" layoutX="14.0" layoutY="14.0" onDragDetected="#perroDetected" onDragDone="#perroDone" text="Perro">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblGato" layoutX="243.0" layoutY="14.0" onDragDetected="#gatoDetected" onDragDone="#gatoDone" text="Gato">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAnimal" layoutX="438.0" layoutY="14.0" onDragDetected="#animalDetected" onDragDone="#animalDone" text="Animal">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="prueba" layoutX="280.0" layoutY="175.0" onDragDropped="#pruebaDrop" onDragOver="#pruebaOver" text="Prueba" />
          </children>
       </Pane>
       <Pane fx:id="paneAdoption" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
@@ -47,6 +119,23 @@
             </TableView>
          </children>
       </Pane>
+      <Pane fx:id="banner" prefHeight="98.0" prefWidth="600.0" style="-fx-background-color: E03616 A4161A;">
+         <children>
+            <FontAwesomeIconView fx:id="icnClose" fill="#f5f3f4" glyphName="CLOSE" layoutX="573.0" layoutY="28.0" onMouseClicked="#handleClose" size="20" />
+            <Button fx:id="index" layoutX="29.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionIndex" stylesheets="@../css/dash.css" text="Inicio" textFill="#f5f3f4" />
+            <Button fx:id="animales" layoutX="84.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionListAdoption" stylesheets="@../css/dash.css" text="Animales" textFill="#f5f3f4" />
+            <TextField fx:id="search" layoutX="424.0" layoutY="59.0" onMouseClicked="#clickSearch" promptText="Buscar" />
+            <Label layoutX="29.0" layoutY="12.0" prefHeight="37.0" prefWidth="177.0" text="ADOPT ME!" textFill="#f5f3f4">
+               <font>
+                  <Font name="Bowlby One SC Regular" size="26.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView fill="#f5f3f4" glyphName="HEART" layoutX="192.0" layoutY="44.0" rotate="25.0" size="24" wrappingWidth="27.199951171875" />
+            <Button fx:id="aboutme" layoutX="300.0" layoutY="59.0" mnemonicParsing="false" stylesheets="@../css/dash.css" text="Sobre nosotros" textFill="#f5f3f4" />
+            <Button fx:id="insert" layoutX="158.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionInsert" stylesheets="@../css/dash.css" text="Alta" textFill="#f5f3f4" />
+            <Button fx:id="adoptar" layoutX="206.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionAdoptar" stylesheets="@../css/dash.css" text="Adoptar" textFill="#f5f3f4" />
+         </children>
+      </Pane>
       <Pane fx:id="paneInsert" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
             <TextField fx:id="fieldNombreAlta" layoutX="14.0" layoutY="63.0" promptText="Nombre" />
@@ -61,7 +150,42 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <DatePicker fx:id="fechaNac" layoutX="13.0" layoutY="180.0" promptText="Fecha nacimiento" />
+            <DatePicker fx:id="fechaNac" layoutX="44.0" layoutY="211.0" promptText="Fecha nacimiento" />
+            <Label layoutX="14.0" layoutY="28.0" text="Nombre:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="191.0" layoutY="28.0" text="Color:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="363.0" layoutY="28.0" text="Peso:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="93.0" text="Sexo:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="188.0" layoutY="93.0" text="Raza:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="363.0" layoutY="93.0" text="Características:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="166.0" text="Fecha de nacimiento:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
@@ -74,39 +198,60 @@
             <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
-      <Pane fx:id="paneDatos" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+      <Pane fx:id="paneEditar" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Label fx:id="nombreAnimal" layoutX="14.0" layoutY="28.0" text="Relleno Nombre">
+            <Label layoutX="14.0" layoutY="55.0" text="Sexo:" textFill="#e03616">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="sexoAnimal" layoutX="14.0" layoutY="55.0" text="Relleno Sexo">
+            <Label layoutX="14.0" layoutY="82.0" text="Raza" textFill="#e03616">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="razaAnimal" layoutX="14.0" layoutY="82.0" text="Relleno Raza">
+            <Label layoutX="14.0" layoutY="139.0" text="Características:" textFill="#e03616">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="caractAnimal" layoutX="14.0" layoutY="139.0" text="Relleno Características">
+            <Label layoutX="14.0" layoutY="109.0" text="Fecha de nacimiento:" textFill="#e03616">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="fechaNacAnimal" layoutX="14.0" layoutY="109.0" text="Relleno Nac">
+            <Label layoutX="15.0" layoutY="28.0" text="Nombre:" textFill="#e03616">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="tablaDosis" layoutX="16.0" layoutY="166.0" prefHeight="136.0" prefWidth="556.0">
-              <columns>
-                <TableColumn fx:id="vacunaColumna" prefWidth="278.39996337890625" text="Vacuna" />
-                <TableColumn fx:id="fechaVacunaColumna" prefWidth="276.800048828125" text="Fecha" />
-              </columns>
-            </TableView>
+            <Label fx:id="sexoAnimalE" layoutX="149.0" layoutY="55.0" text="Relleno Sexo">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="razaAnimalE" layoutX="149.0" layoutY="82.0" text="Relleno Raza">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="fechaNacAnimalE" layoutX="211.0" layoutY="109.0" text="Relleno Nac">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="Hecho" layoutX="540.0" layoutY="19.0" mnemonicParsing="false" onAction="#actionHecho" stylesheets="@../css/dash.css" text="Hecho" textFill="#f5f3f4" />
+            <TextField fx:id="editarNombre" layoutX="149.0" layoutY="29.0" promptText="Nombre" />
+            <TextField fx:id="editarCaract" layoutX="211.0" layoutY="139.0" promptText="Características" />
+            <Label layoutX="14.0" layoutY="181.0" text="Insertar vacuna:" textFill="#e03616">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboVacunas" layoutX="210.0" layoutY="182.0" prefWidth="150.0" />
+            <Button fx:id="Insertar" layoutX="391.0" layoutY="182.0" mnemonicParsing="false" onAction="#actionInsertarVacuna" stylesheets="@../css/dash.css" text="Insertar" textFill="#f5f3f4" />
+            <Label fx:id="idAnimalE" layoutX="35.0" layoutY="11.0" text="Relleno id" />
+            <Label layoutX="16.0" layoutY="11.0" text="ID:" />
          </children>
       </Pane>
    </children>

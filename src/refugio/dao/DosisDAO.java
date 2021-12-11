@@ -25,7 +25,13 @@ import refugio.util.ConnectionManager;
 public class DosisDAO implements GenericoDAO {
 
     private AnimalController AController;
-
+    
+    /**
+     * Método que nos dará las vacunas de un animal en concreto.
+     * 
+     * @param t
+     * @return 
+     */
     @Override
     public Object read(Animal t) {
         Dosis dosis = new Dosis();
@@ -105,6 +111,9 @@ public class DosisDAO implements GenericoDAO {
                 }
 
             }
+            else{
+                
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -118,13 +127,7 @@ public class DosisDAO implements GenericoDAO {
     }
 
     @Override
-    public void delete(Object t) {
+    public Object get() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void deleteByID(Object id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

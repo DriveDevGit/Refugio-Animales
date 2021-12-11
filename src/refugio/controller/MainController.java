@@ -23,7 +23,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import refugio.dao.AnimalDAO;
 import refugio.dao.DosisDAO;
@@ -45,7 +49,7 @@ public class MainController implements Initializable {
     private AnimalController AController;
     private boolean tablaMostrada = false;
     private Animal animalClic;
-
+    
     private ObservableList<String> generos = FXCollections.observableArrayList("Macho", "Hembra");
     private ObservableList<String> razas = FXCollections.observableArrayList("Siamés", "Persa", "Siberiano",
             "Bengalí", "Angora Turco", "Siberiano2",
@@ -59,8 +63,6 @@ public class MainController implements Initializable {
     private Pane banner;
     @FXML
     private Button index;
-    @FXML
-    private Button adoption;
     @FXML
     private TextField search;
     @FXML
@@ -127,6 +129,46 @@ public class MainController implements Initializable {
     private TableColumn<Dosis, String> vacunaColumna;
     @FXML
     private TableColumn<Dosis, String> fechaVacunaColumna;
+    @FXML
+    private Button animales;
+    @FXML
+    private Button adoptar;
+    @FXML
+    private Button botonAdoptar;
+    @FXML
+    private Label lblPerro;
+    @FXML
+    private Label lblGato;
+    @FXML
+    private Label lblAnimal;
+    @FXML
+    private Pane paneAdoptar;
+    @FXML
+    private Label prueba;
+    @FXML
+    private Button editar;
+    @FXML
+    private Pane paneEditar;
+    @FXML
+    private Button Hecho;
+    @FXML
+    private TextField editarNombre;
+    @FXML
+    private TextField editarCaract;
+    @FXML
+    private ComboBox<?> comboVacunas;
+    @FXML
+    private Button Insertar;
+    @FXML
+    private Label sexoAnimalE;
+    @FXML
+    private Label razaAnimalE;
+    @FXML
+    private Label fechaNacAnimalE;
+    @FXML
+    private Label idAnimal;
+    @FXML
+    private Label idAnimalE;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -160,6 +202,8 @@ public class MainController implements Initializable {
         if (tablaMostrada == false) {
             this.mostrarTabla();
             tablaMostrada = true;
+        }else{
+            tablaDosis.getItems().clear();
         }
     }
 
@@ -184,6 +228,8 @@ public class MainController implements Initializable {
         if (tablaMostrada == false) {
             this.mostrarTabla();
             tablaMostrada = true;
+        }else{
+            tablaDosis.getItems().clear();
         }
     }
 
@@ -212,9 +258,35 @@ public class MainController implements Initializable {
         caractCol.setCellValueFactory(new PropertyValueFactory<Animal, String>("Caract"));
         tableList.getItems().addAll(animales);
 
-        FilteredList<Animal> datosFiltrados = new FilteredList<>(tableList.getItems(), p -> true);
+        //this.filtrarAnimal();
 
-        search.textProperty().addListener((observable, oldValue, newValue) -> {
+        /**
+         * Esta clase interna nos dará la posibilidad de darle doble clic a una
+         * fila para poder acceder a un nuevo panel.
+         */
+        tableList.setRowFactory(tv -> {
+            TableRow<Animal> row = new TableRow<>();
+            row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                        Animal animalClicked = row.getItem();
+                        animalClic = animalClicked;
+                        dao = new DosisDAO();
+                        Collection<Dosis> dosisList = dao.getAll(animalClic);
+                        actualizarPanelDatos(animalClicked, dosisList);
+                        paneDatos.toFront();
+                    }
+                }
+            });
+            return row;
+        });
+    }
+    
+    private void filtrarAnimal(){
+        
+            FilteredList<Animal> datosFiltrados = new FilteredList<>(tableList.getItems(), p -> true);
+            search.textProperty().addListener((observable, oldValue, newValue) -> {
             datosFiltrados.setPredicate(animal -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
@@ -239,28 +311,7 @@ public class MainController implements Initializable {
 
         datosOrdenados.comparatorProperty().bind(tableList.comparatorProperty());
         tableList.setItems(datosOrdenados);
-
-        /**
-         * Esta clase interna nos dará la posibilidad de darle doble clic a una
-         * fila para poder acceder a un nuevo panel.
-         */
-        tableList.setRowFactory(tv -> {
-            TableRow<Animal> row = new TableRow<>();
-            row.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                        Animal animalClicked = row.getItem();                                              
-                        animalClic = animalClicked;
-                        dao = new DosisDAO();                        
-                        Collection<Dosis> dosisList = dao.getAll(animalClic);
-                        actualizarPanelDatos(animalClicked, dosisList);
-                        paneDatos.toFront();
-                    }
-                }
-            });
-            return row;
-        });
+             
     }
 
     /**
@@ -288,26 +339,179 @@ public class MainController implements Initializable {
         }
 
     }
-    
-    private void actualizarPanelDatos(Animal animal, Collection dosis){
-        
+
+    private void actualizarPanelDatos(Animal animal, Collection dosis) {
+
+        idAnimal.setText(String.valueOf(animal.getId()));
+        idAnimalE.setText(String.valueOf(animal.getId()));
         nombreAnimal.setText(animal.getNombre());
-        
-        if(animal.getSexo()=='M'){
+
+        if (animal.getSexo() == 'M') {
             sexoAnimal.setText("Macho");
-        }
-        else{
+            sexoAnimalE.setText("Macho");
+        } else {
             sexoAnimal.setText("Hembra");
+            sexoAnimalE.setText("Hembra");
         }
-        
+
         razaAnimal.setText(animal.getRaza());
         fechaNacAnimal.setText(animal.getFechanac());
         caractAnimal.setText(animal.getCaract());
-        
+        razaAnimalE.setText(animal.getRaza());
+        fechaNacAnimalE.setText(animal.getFechanac());
+
         tablaDosis.getItems().clear();
         vacunaColumna.setCellValueFactory(new PropertyValueFactory<Dosis, String>("Vacuna"));
         fechaVacunaColumna.setCellValueFactory(new PropertyValueFactory<Dosis, String>("Fecha"));
         tablaDosis.getItems().addAll(dosis);
+    }
+
+    @FXML
+    private void adoptarOver(DragEvent event) {
+    }
+
+    @FXML
+    private void adoptarDrop(DragEvent event) {
+    }
+
+    @FXML
+    private void perroDetected(MouseEvent event) {
+        Dragboard db = lblPerro.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent content = new ClipboardContent();
+        content.putString(lblPerro.getText());
+        db.setContent(content);
+
+        event.consume();
+
+    }
+
+    @FXML
+    private void perroDone(DragEvent event) {
+
+        if (event.getTransferMode() == TransferMode.MOVE) {
+            lblPerro.setText("");
+        }
+
+        event.consume();
+        lblPerro.setText("Perro");
+    }
+
+    @FXML
+    private void gatoDetected(MouseEvent event) {
+        Dragboard db = lblGato.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent content = new ClipboardContent();
+        content.putString(lblGato.getText());
+        db.setContent(content);
+
+        event.consume();
+    }
+
+    @FXML
+    private void gatoDone(DragEvent event) {
+
+        if (event.getTransferMode() == TransferMode.MOVE) {
+            lblGato.setText("");
+        }
+
+        event.consume();
+        lblGato.setText("Gato");
+
+    }
+
+    @FXML
+    private void animalDetected(MouseEvent event) {
+        Dragboard db = lblAnimal.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent content = new ClipboardContent();
+        content.putString(lblAnimal.getText());
+        db.setContent(content);
+
+        event.consume();
+    }
+
+    @FXML
+    private void animalDone(DragEvent event) {
+
+        if (event.getTransferMode() == TransferMode.MOVE) {
+            lblAnimal.setText("");
+        }
+
+        event.consume();
+        lblAnimal.setText("Animal");
+    }
+
+    @FXML
+    private void actionAdoptar(ActionEvent event) {
+        paneAdoptar.toFront();
+    }
+
+    @FXML
+    private void pruebaOver(DragEvent event) {
+
+        if (event.getGestureSource() != prueba
+                && event.getDragboard().hasString()) {
+
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+
+        event.consume();
+    }
+
+    @FXML
+    private void pruebaDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        if (db.hasString()) {
+            prueba.setText(db.getString());
+            success = true;
+        }
+
+        event.setDropCompleted(success);
+
+        event.consume();
+    }
+
+    @FXML
+    private void actionHecho(ActionEvent event) {
+        AController = new AnimalController(dao);
+        int id = Integer.parseInt(idAnimalE.getText());
+        String nombre = "";
+        String caract = "";
+        String color = "";
+        if (editarNombre.getText().equals("")) { //Si el campo nombre está vacío
+            nombre = nombreAnimal.getText(); //Se dejará el nombre anterior
+            if (editarCaract.getText().equals("")) { //Si el campo caract está vacío
+                caract = caractAnimal.getText(); //Se dejarán las caract anteriores         
+                
+            } else {
+                caract = editarCaract.getText(); //Se colocará las nuevas caract
+
+            }
+        } else {
+            nombre = editarNombre.getText(); //Se colocará el nuevo nombre
+            if (editarCaract.getText().equals("")) { //Si el campo caract está vacío
+                caract = caractAnimal.getText(); //Se dejarán las caract anteriores
+
+            } else {
+                caract = editarCaract.getText(); //Se colocará las nuevas caract
+
+            }
+        }
+
+        AController.editarAnimal(id, nombre, caract);
+        tableList.refresh();
+        paneAdoption.toFront();
+    }
+
+    @FXML
+    private void actionEditar(ActionEvent event) {
+        paneEditar.toFront();
+    }
+
+    @FXML
+    private void actionInsertarVacuna(ActionEvent event) {
     }
 
 }

@@ -23,26 +23,60 @@ public class AnimalController {
         this.dao = controller;
     }
 
+    /**
+     * Método que insertará al animal,
+     * 
+     * @param animal 
+     */
     public void insertarAnimal(Animal animal) {
         dao = new AnimalDAO();
         dao.insert(animal);
     }
 
+    /**
+     * Método que nos devolverá las dosis de ese animal.
+     * 
+     * @param animal
+     * @return 
+     */
     public Dosis obtenerDosis(Animal animal) {
         dao = new DosisDAO();
         return (Dosis) dao.getAll(animal);
     }
-
+    
+    /**
+     * Método que suministrará las vacunas obligatorias.
+     */
     public void vacunasObligatorias() {
         Animal id = new Animal();
         dao = new AnimalDAO();
         GenericoDAO daoD = new DosisDAO();
-        id = (Animal) dao.read(id);
-        LocalDate timeNow = LocalDate.now();
+        id = (Animal) dao.read(id);  //Último animal insertado.
+        LocalDate timeNow = LocalDate.now(); //Hora actual
         String fechaVacuna = timeNow.format(DateTimeFormatter.ISO_DATE);
 
         Dosis nDosis = new Dosis(id.getId(), id.getEspecieId(), fechaVacuna, true);
         daoD.insert(nDosis);
 
+    }
+    
+    /**
+     * Método para editar al animal.
+     * 
+     * @param id
+     * @param nombre
+     * @param caract 
+     */
+    public void editarAnimal(int id, String nombre, String caract){
+        Animal animal = new Animal (id, nombre, caract);
+        dao = new AnimalDAO();
+        dao.update(animal);
+    }
+    
+    public void adoptarAnimal(){
+        Animal animal = new Animal();
+        dao = new AnimalDAO();
+        animal = (Animal) dao.get();
+        dao.update(animal);
     }
 }
