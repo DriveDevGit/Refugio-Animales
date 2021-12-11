@@ -13,6 +13,9 @@ public class Dosis {
     private boolean esencial;
 
     public Dosis() {
+        this.id_animal=id_animal;
+        this.id_vacuna=id_vacuna;
+        this.fecha=fecha;
     }
     
     public Dosis(int id_animal, String vacuna, String fecha) {
@@ -21,13 +24,38 @@ public class Dosis {
         this.fecha = fecha;
     }
     
+    /**
+     * Constructor para vacunas obligatorias.
+     * 
+     * @param id_animal
+     * @param id_especie
+     * @param fecha
+     * @param esencial 
+     */
     public Dosis(int id_animal, int id_especie, String fecha, boolean esencial){
         this.id_animal = id_animal;
         this.id_especie = id_especie;
         this.fecha = fecha;
         this.esencial = esencial;
     }
-
+    
+    /**
+     * Constructor para vacunas no obligatorias.
+     * 
+     * @param id_animal
+     * @param id_especie
+     * @param id_vacuna
+     * @param fecha
+     * @param esencial 
+     */
+    public Dosis(int id_animal, int id_especie, int id_vacuna, String fecha, boolean esencial){
+        this.id_animal = id_animal;
+        this.id_especie = id_especie;
+        this.id_vacuna = id_vacuna;
+        this.fecha = fecha;
+        this.esencial = esencial;
+    }
+    
     public int getId_especie() {
         return id_especie;
     }
@@ -78,6 +106,12 @@ public class Dosis {
         this.fecha = fecha;
     }
     
+    /**
+     * Método que nos convertirá la Id de la vacuna a String.
+     * 
+     * @param id
+     * @return 
+     */
     public static String toIdVacunaString(int id){
         switch(id){
             case 1: return "Moquillo";
@@ -91,6 +125,28 @@ public class Dosis {
             case 9: return "Panleucopenia";
             case 11: return "Peritonitis";
             default: return "Sin vacuna";
+        }
+    }
+    
+    /**
+     * Método que nos convertirá la String de la vacuna a Id.
+     * 
+     * @param vacuna
+     * @return 
+     */
+    public static int toStringVacunaId(String vacuna){
+        switch(vacuna){
+            case "Moquillo": return 1;
+            case "Parvovirus": return 2;
+            case "Rabia": return 3;
+            case "Adenovirus": return 4;
+            case "Coronavirus": return 5;
+            case "Leptospira": return 6;
+            case "Herpes": return 7;
+            case "Calcivirus": return 8;
+            case "Panleucopenia": return 9;
+            case "Peritonitis": return 11;
+            default: return 0;
         }
     }
     

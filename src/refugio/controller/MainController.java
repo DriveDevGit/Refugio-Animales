@@ -56,7 +56,12 @@ public class MainController implements Initializable {
             "Bulldog", "Labrador", "Caniche",
             "Pastor alemán", "Chihuahua", "Terrier",
             "Perro genérico", "Gato genérico");
-
+    
+    private ObservableList<String> vacunaPerros = FXCollections.observableArrayList("Moquillo", "Parvovirus", "Rabia", 
+                                                                                    "Adenovirus", "Coronavirus", "Leptospira");
+    private ObservableList<String> vacunaGatos = FXCollections.observableArrayList("Coronavirus", "Herpes", "Calcivirus",
+                                                                                   "Panleucopenia", "Peritonitis");
+    
     @FXML
     private FontAwesomeIconView icnClose;
     @FXML
@@ -156,7 +161,7 @@ public class MainController implements Initializable {
     @FXML
     private TextField editarCaract;
     @FXML
-    private ComboBox<?> comboVacunas;
+    private ComboBox<String> comboVacunas;
     @FXML
     private Button Insertar;
     @FXML
@@ -169,6 +174,10 @@ public class MainController implements Initializable {
     private Label idAnimal;
     @FXML
     private Label idAnimalE;
+    @FXML
+    private Label lblVacunaVacia;
+    @FXML
+    private Label lblExitoInsertar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -283,6 +292,9 @@ public class MainController implements Initializable {
         });
     }
     
+    /**
+     * Método para filtrar las búsquedas.
+     */
     private void filtrarAnimal(){
         
             FilteredList<Animal> datosFiltrados = new FilteredList<>(tableList.getItems(), p -> true);
@@ -339,7 +351,13 @@ public class MainController implements Initializable {
         }
 
     }
-
+    
+    /**
+     * Método para actualizar el panel de datos.
+     * 
+     * @param animal
+     * @param dosis 
+     */
     private void actualizarPanelDatos(Animal animal, Collection dosis) {
 
         idAnimal.setText(String.valueOf(animal.getId()));
@@ -365,7 +383,79 @@ public class MainController implements Initializable {
         fechaVacunaColumna.setCellValueFactory(new PropertyValueFactory<Dosis, String>("Fecha"));
         tablaDosis.getItems().addAll(dosis);
     }
+    
+    /**
+     * Método que nos llevará al panel de modificar.
+     * 
+     * @param event 
+     */
+    @FXML
+    private void actionEditar(ActionEvent event) {
+        paneEditar.toFront();
+        if(animalClic.getEspecie().equals("Perro")){
+            comboVacunas.setItems(vacunaPerros);
+        }else{
+            comboVacunas.setItems(vacunaGatos);
+        }   
+    }
+    
+    /**
+     * Método que modificará los datos del animal.
+     * 
+     * @param event 
+     */
+    @FXML
+    private void actionHecho(ActionEvent event) {
+        AController = new AnimalController(dao);
+        int id = Integer.parseInt(idAnimalE.getText());
+        String nombre = "";
+        String caract = "";
+        String color = "";
+        if (editarNombre.getText().equals("")) { //Si el campo nombre está vacío
+            nombre = nombreAnimal.getText(); //Se dejará el nombre anterior
+            if (editarCaract.getText().equals("")) { //Si el campo caract está vacío
+                caract = caractAnimal.getText(); //Se dejarán las caract anteriores         
+                
+            } else {
+                caract = editarCaract.getText(); //Se colocará las nuevas caract
 
+            }
+        } else {
+            nombre = editarNombre.getText(); //Se colocará el nuevo nombre
+            if (editarCaract.getText().equals("")) { //Si el campo caract está vacío
+                caract = caractAnimal.getText(); //Se dejarán las caract anteriores
+
+            } else {
+                caract = editarCaract.getText(); //Se colocará las nuevas caract
+
+            }
+        }
+
+        AController.editarAnimal(id, nombre, caract);
+        tableList.refresh();
+        paneAdoption.toFront();
+    }
+        
+    /**
+     * Método para insertar cualquier vacuna.
+     * 
+     * @param event 
+     */
+    @FXML
+    private void actionInsertarVacuna(ActionEvent event) {
+        AController = new AnimalController(dao);
+        if (comboVacunas.getSelectionModel().isEmpty()){
+            lblVacunaVacia.setVisible(true);
+        }
+        else{
+            lblVacunaVacia.setVisible(false);
+            String vacuna = comboVacunas.getValue();
+            AController.vacunaNoObligatoria(animalClic, vacuna);
+            lblExitoInsertar.setText("La vacuna "+comboVacunas.getValue()+" ha sido suministrada a "+animalClic.getNombre());
+            lblExitoInsertar.setVisible(true);
+        }
+    }
+    
     @FXML
     private void adoptarOver(DragEvent event) {
     }
@@ -472,46 +562,4 @@ public class MainController implements Initializable {
 
         event.consume();
     }
-
-    @FXML
-    private void actionHecho(ActionEvent event) {
-        AController = new AnimalController(dao);
-        int id = Integer.parseInt(idAnimalE.getText());
-        String nombre = "";
-        String caract = "";
-        String color = "";
-        if (editarNombre.getText().equals("")) { //Si el campo nombre está vacío
-            nombre = nombreAnimal.getText(); //Se dejará el nombre anterior
-            if (editarCaract.getText().equals("")) { //Si el campo caract está vacío
-                caract = caractAnimal.getText(); //Se dejarán las caract anteriores         
-                
-            } else {
-                caract = editarCaract.getText(); //Se colocará las nuevas caract
-
-            }
-        } else {
-            nombre = editarNombre.getText(); //Se colocará el nuevo nombre
-            if (editarCaract.getText().equals("")) { //Si el campo caract está vacío
-                caract = caractAnimal.getText(); //Se dejarán las caract anteriores
-
-            } else {
-                caract = editarCaract.getText(); //Se colocará las nuevas caract
-
-            }
-        }
-
-        AController.editarAnimal(id, nombre, caract);
-        tableList.refresh();
-        paneAdoption.toFront();
-    }
-
-    @FXML
-    private void actionEditar(ActionEvent event) {
-        paneEditar.toFront();
-    }
-
-    @FXML
-    private void actionInsertarVacuna(ActionEvent event) {
-    }
-
 }

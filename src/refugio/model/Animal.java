@@ -190,6 +190,12 @@ public class Animal {
         this.especie = especie;
     }
     
+    /**
+     * Método que nos convertirá la Id de la especie a String.
+     * 
+     * @param idEspecie
+     * @return 
+     */
     public static String toEspecieString(int idEspecie){
         switch(idEspecie){
             case 1: return "Perro";
@@ -199,6 +205,12 @@ public class Animal {
         }
     }
     
+    /**
+     * Método que nos convertirá la Id de la raza a String.
+     * 
+     * @param idRaza
+     * @return 
+     */
     public static String toRazaString(int idRaza){
         switch(idRaza){
             case 1: return "Siamés";
@@ -219,6 +231,12 @@ public class Animal {
         }
     }
     
+    /**
+     * Método que nos convertirá la String de la raza a Id.
+     * 
+     * @param raza
+     * @return 
+     */
     public static int toRazaInteger(String raza){
         switch(raza){
             case "Siamés": return 1;

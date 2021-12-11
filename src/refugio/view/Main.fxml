@@ -252,6 +252,16 @@
             <Button fx:id="Insertar" layoutX="391.0" layoutY="182.0" mnemonicParsing="false" onAction="#actionInsertarVacuna" stylesheets="@../css/dash.css" text="Insertar" textFill="#f5f3f4" />
             <Label fx:id="idAnimalE" layoutX="35.0" layoutY="11.0" text="Relleno id" />
             <Label layoutX="16.0" layoutY="11.0" text="ID:" />
+            <Label fx:id="lblVacunaVacia" layoutX="457.0" layoutY="185.0" text="El campo está vacío" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblExitoInsertar" layoutX="16.0" layoutY="240.0" text="Relleno de éxito al insertar" textFill="#00f200" visible="false">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

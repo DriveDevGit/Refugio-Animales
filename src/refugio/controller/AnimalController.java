@@ -8,6 +8,7 @@ import refugio.dao.DosisDAO;
 import refugio.dao.GenericoDAO;
 import refugio.model.Animal;
 import refugio.model.Dosis;
+import static refugio.model.Dosis.toStringVacunaId;
 
 /**
  *
@@ -58,6 +59,22 @@ public class AnimalController {
         Dosis nDosis = new Dosis(id.getId(), id.getEspecieId(), fechaVacuna, true);
         daoD.insert(nDosis);
 
+    }
+    
+    /**
+     * Método que suministrará las vacunas no obligatorias.
+     * 
+     * @param animal 
+     * @param vacuna
+     */
+    public void vacunaNoObligatoria(Animal animal, String vacuna){
+        dao = new AnimalDAO();
+        GenericoDAO daoD = new DosisDAO();
+        LocalDate timeNow = LocalDate.now(); //Hora actual
+        String fechaVacuna = timeNow.format(DateTimeFormatter.ISO_DATE);
+
+        Dosis nDosis = new Dosis(animal.getId(), animal.getEspecieId(), toStringVacunaId(vacuna),fechaVacuna, false);
+        daoD.insert(nDosis);
     }
     
     /**
