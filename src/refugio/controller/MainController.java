@@ -232,9 +232,11 @@ public class MainController implements Initializable {
         paneAdoption.toFront();
         if (tablaMostrada == false) {
             this.mostrarTabla();
+            this.filtrarAnimal();
             tablaMostrada = true;
         } else {
-            tablaDosis.getItems().clear();
+            tablaAnimal.getItems().clear();
+            this.mostrarTabla();
         }
     }
 
@@ -258,9 +260,11 @@ public class MainController implements Initializable {
         paneAdoption.toFront();
         if (tablaMostrada == false) {
             this.mostrarTabla();
+            this.filtrarAnimal();
             tablaMostrada = true;
         } else {
-            tablaDosis.getItems().clear();
+            tablaAnimal.getItems().clear();
+            this.mostrarTabla();
         }
     }
 
@@ -312,8 +316,7 @@ public class MainController implements Initializable {
         pesoColumna.setCellValueFactory(new PropertyValueFactory<Animal, Double>("Peso"));
         caractColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("Caract"));
         tablaAnimal.getItems().addAll(animales);
-        this.filtrarAnimal();
-        
+         
         /**
          * Esta clase interna nos dará la posibilidad de darle doble clic a una
          * fila para poder acceder a un nuevo panel.
@@ -368,7 +371,6 @@ public class MainController implements Initializable {
 
         datosOrdenados.comparatorProperty().bind(tablaAnimal.comparatorProperty());
         tablaAnimal.setItems(datosOrdenados);
-
     }
 
     /**
@@ -478,7 +480,6 @@ public class MainController implements Initializable {
         AController.editarAnimal(id, nombre, caract);
         editarNombre.setText("");
         editarCaract.setText("");
-        tablaAnimal.refresh();
         paneAdoption.toFront();
     }
 
