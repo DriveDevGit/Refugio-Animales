@@ -113,7 +113,12 @@ public class AnimalDAO implements GenericoDAO {
             System.err.println("Error");
         }
     }
-
+    
+    /**
+     * Método para editar al animal.
+     * 
+     * @param t 
+     */
     @Override
     public void update(Object t) {
         try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement()) {
@@ -131,12 +136,12 @@ public class AnimalDAO implements GenericoDAO {
             System.err.println("Error");
         }
     }
-
-    @Override
-    public Collection getAll(Animal t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
+    /**
+     *  Método para adoptar al más viejo.
+     * 
+     * @param idespecie 
+     */
     @Override
     public void get(int idespecie) {
         Object animal = new Animal();
@@ -177,7 +182,15 @@ public class AnimalDAO implements GenericoDAO {
             System.err.println("Error");
         }
     }
-
+    
+    /**
+     * Método para filtrar por los campos elegidos.
+     * 
+     * @param nCampos
+     * @param razaCombo
+     * @param colorCombo
+     * @return 
+     */
     @Override
     public Collection search(int nCampos, String razaCombo, String colorCombo) {
         List animales = new ArrayList();
@@ -249,6 +262,11 @@ public class AnimalDAO implements GenericoDAO {
             System.err.println("Error");
         }
         return animales;
+    }
+
+    @Override
+    public Collection getAll(Animal t) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

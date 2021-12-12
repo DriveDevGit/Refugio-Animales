@@ -53,7 +53,13 @@ public class DosisDAO implements GenericoDAO {
         }
         return dosis;
     }
-
+    
+    /**
+     * Método para obtener las dosis del animal.
+     * 
+     * @param t
+     * @return 
+     */
     @Override
     public Collection getAll(Animal t) {
         List dosisList = new ArrayList();
@@ -76,12 +82,12 @@ public class DosisDAO implements GenericoDAO {
         }
         return dosisList;
     }
-
-    @Override
-    public List<Dosis> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
+    
+    /**
+     * Método para insertar las vacunas.
+     * 
+     * @param t 
+     */
     @Override
     public void insert(Object t) {
         try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement();
@@ -134,6 +140,11 @@ public class DosisDAO implements GenericoDAO {
 
     @Override
     public Collection search(int nCampos, String colorCombo, String razaCombo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Collection getAll() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

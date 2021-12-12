@@ -150,12 +150,7 @@ public class MainController implements Initializable {
     private Label lblVacunaVacia;
     @FXML
     private Label lblExitoInsertar;
-    @FXML
-    private Pane paneIndex;
-    @FXML
-    private Label lblImageView;
-    @FXML
-    private ImageView imageView;
+    private Pane paneIndece;
     @FXML
     private Pane paneAdoptar;
     @FXML
@@ -171,21 +166,21 @@ public class MainController implements Initializable {
     @FXML
     private Pane paneAdoption;
     @FXML
-    private TableView<Animal> tableList;
+    private TableView<Animal> tablaAnimal;
     @FXML
-    private TableColumn<Animal, String> nameCol;
+    private TableColumn<Animal, String> nombreColumna;
     @FXML
-    private TableColumn<Animal, Character> genreCol;
+    private TableColumn<Animal, Character> sexoColumna;
     @FXML
-    private TableColumn<Animal, String> colorCol;
+    private TableColumn<Animal, String> colorColumna;
     @FXML
-    private TableColumn<Animal, String> especieCol;
+    private TableColumn<Animal, String> especieColumna;
     @FXML
-    private TableColumn<Animal, String> raceCol;
+    private TableColumn<Animal, String> razaColumna;
     @FXML
-    private TableColumn<Animal, Double> weightCol;
+    private TableColumn<Animal, Double> pesoColumna;
     @FXML
-    private TableColumn<Animal, String> caractCol;
+    private TableColumn<Animal, String> caractColumna;
     @FXML
     private Pane paneInsertar;
     @FXML
@@ -204,12 +199,14 @@ public class MainController implements Initializable {
     private DatePicker fechaNac;
     @FXML
     private ComboBox<String> comboColorAlta;
+    @FXML
+    private Pane paneIndice;
 
     
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        paneIndex.toFront();
+        paneIndice.toFront();
     }
 
     /**
@@ -247,7 +244,7 @@ public class MainController implements Initializable {
      */
     @FXML
     private void actionInicio(ActionEvent event) {
-        paneIndex.toFront();
+        paneIndice.toFront();
     }
 
     /**
@@ -307,21 +304,21 @@ public class MainController implements Initializable {
     public void mostrarTabla() {
         dao = new AnimalDAO();
         Collection<Animal> animales = dao.getAll();
-        nameCol.setCellValueFactory(new PropertyValueFactory<Animal, String>("Nombre"));
-        genreCol.setCellValueFactory(new PropertyValueFactory<Animal, Character>("Sexo"));
-        colorCol.setCellValueFactory(new PropertyValueFactory<Animal, String>("Color"));
-        especieCol.setCellValueFactory(new PropertyValueFactory<Animal, String>("Especie"));
-        raceCol.setCellValueFactory(new PropertyValueFactory<Animal, String>("Raza"));
-        weightCol.setCellValueFactory(new PropertyValueFactory<Animal, Double>("Peso"));
-        caractCol.setCellValueFactory(new PropertyValueFactory<Animal, String>("Caract"));
-        tableList.getItems().addAll(animales);
-
-        //this.filtrarAnimal();
+        nombreColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("Nombre"));
+        sexoColumna.setCellValueFactory(new PropertyValueFactory<Animal, Character>("Sexo"));
+        colorColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("Color"));
+        especieColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("Especie"));
+        razaColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("Raza"));
+        pesoColumna.setCellValueFactory(new PropertyValueFactory<Animal, Double>("Peso"));
+        caractColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("Caract"));
+        tablaAnimal.getItems().addAll(animales);
+        this.filtrarAnimal();
+        
         /**
          * Esta clase interna nos dará la posibilidad de darle doble clic a una
          * fila para poder acceder a un nuevo panel.
          */
-        tableList.setRowFactory(tv -> {
+        tablaAnimal.setRowFactory(tv -> {
             TableRow<Animal> row = new TableRow<>();
             row.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -345,7 +342,7 @@ public class MainController implements Initializable {
      */
     private void filtrarAnimal() {
 
-        FilteredList<Animal> datosFiltrados = new FilteredList<>(tableList.getItems(), p -> true);
+        FilteredList<Animal> datosFiltrados = new FilteredList<>(tablaAnimal.getItems(), p -> true);
         filtrar.textProperty().addListener((observable, oldValue, newValue) -> {
             datosFiltrados.setPredicate(animal -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -369,8 +366,8 @@ public class MainController implements Initializable {
 
         SortedList<Animal> datosOrdenados = new SortedList<>(datosFiltrados);
 
-        datosOrdenados.comparatorProperty().bind(tableList.comparatorProperty());
-        tableList.setItems(datosOrdenados);
+        datosOrdenados.comparatorProperty().bind(tablaAnimal.comparatorProperty());
+        tablaAnimal.setItems(datosOrdenados);
 
     }
 
@@ -383,7 +380,7 @@ public class MainController implements Initializable {
     private void subirAnimal(ActionEvent event) {
         AController = new AnimalController(dao);
 
-        if (fieldNombreAlta.getText().equals("") || pesoFieldAlta.getText().equals("") || caractFieldAlta.getText().equals("")) {
+        if (fieldNombreAlta.getText().equals("") || pesoFieldAlta.getText().equals("") || caractFieldAlta.getText().equals("") || Integer.parseInt(pesoFieldAlta.getText()) > 100) {
             lblErrorAlta.setVisible(true);
         } else if (sexoBoxAlta.getSelectionModel().isEmpty() || razaBoxAlta.getSelectionModel().isEmpty() || comboColorAlta.getSelectionModel().isEmpty()
                 || fechaNac.getValue() == null) {
@@ -479,7 +476,9 @@ public class MainController implements Initializable {
         }
 
         AController.editarAnimal(id, nombre, caract);
-        tableList.refresh();
+        editarNombre.setText("");
+        editarCaract.setText("");
+        tablaAnimal.refresh();
         paneAdoption.toFront();
     }
 
@@ -500,6 +499,46 @@ public class MainController implements Initializable {
             lblExitoInsertar.setText("La vacuna " + comboVacunas.getValue() + " ha sido suministrada a " + animalClic.getNombre());
             lblExitoInsertar.setVisible(true);
         }
+    }
+    
+    /**
+     * Método que servirá para filtrar por los campos elegidos.
+     * 
+     * @param event 
+     */
+    @FXML
+    private void botonBuscar(ActionEvent event) {
+        dao = new AnimalDAO();
+        Collection<Animal> animales = null;
+        tablaBuscar.getItems().clear();
+        boolean exito = false;
+        if (comboRaza.getSelectionModel().isEmpty() && comboColor.getSelectionModel().isEmpty()) {
+            lblCamposBuscar.setVisible(true);
+        } else if (!(comboRaza.getSelectionModel().isEmpty()) && comboColor.getSelectionModel().isEmpty()) {
+            animales = dao.search(1, comboRaza.getValue(), "Vacío");
+            lblCamposBuscar.setVisible(false);
+            exito = true;
+        } else if (comboRaza.getSelectionModel().isEmpty() && !(comboColor.getSelectionModel().isEmpty())) {
+            animales = dao.search(2, "Vacío", comboColor.getValue());
+            lblCamposBuscar.setVisible(false);
+            exito = true;
+        } else if (!(comboRaza.getSelectionModel().isEmpty()) && !(comboColor.getSelectionModel().isEmpty())) {
+            animales = dao.search(3, comboRaza.getValue(), comboColor.getValue());
+            lblCamposBuscar.setVisible(false);
+            exito = true;
+        }
+
+        if (exito == true) {
+            nombreColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Nombre"));
+            sexoColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, Character>("Sexo"));
+            colorColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Color"));
+            especieColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Especie"));
+            razaColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Raza"));
+            pesoColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, Double>("Peso"));
+            caractColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Caract"));
+            tablaBuscar.getItems().addAll(animales);
+        }
+
     }
 
     /**
@@ -609,40 +648,5 @@ public class MainController implements Initializable {
 
         event.consume();
         lblAnimal.setText("Animal");
-    }
-
-    @FXML
-    private void botonBuscar(ActionEvent event) {
-        dao = new AnimalDAO();
-        Collection<Animal> animales = null;
-        tablaBuscar.getItems().clear();
-        boolean exito = false;
-        if (comboRaza.getSelectionModel().isEmpty() && comboColor.getSelectionModel().isEmpty()) {
-            lblCamposBuscar.setVisible(true);
-        } else if (!(comboRaza.getSelectionModel().isEmpty()) && comboColor.getSelectionModel().isEmpty()) {
-            animales = dao.search(1, comboRaza.getValue(), "Vacío");
-            lblCamposBuscar.setVisible(false);
-            exito = true;
-        } else if (comboRaza.getSelectionModel().isEmpty() && !(comboColor.getSelectionModel().isEmpty())) {
-            animales = dao.search(2, "Vacío", comboColor.getValue());
-            lblCamposBuscar.setVisible(false);
-            exito = true;
-        } else if (!(comboRaza.getSelectionModel().isEmpty()) && !(comboColor.getSelectionModel().isEmpty())) {
-            animales = dao.search(3, comboRaza.getValue(), comboColor.getValue());
-            lblCamposBuscar.setVisible(false);
-            exito = true;
-        }
-
-        if (exito == true) {
-            nombreColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Nombre"));
-            sexoColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, Character>("Sexo"));
-            colorColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Color"));
-            especieColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Especie"));
-            razaColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Raza"));
-            pesoColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, Double>("Peso"));
-            caractColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Caract"));
-            tablaBuscar.getItems().addAll(animales);
-        }
-
     }
 }

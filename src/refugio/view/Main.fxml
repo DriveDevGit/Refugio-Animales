@@ -9,13 +9,27 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="refugio.controller.MainController">
    <children>
+      <Pane fx:id="paneAdoption" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <TableView fx:id="tablaAnimal" prefHeight="300.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="nombreColumna" prefWidth="75.0" text="Nombre" />
+                <TableColumn fx:id="sexoColumna" prefWidth="75.0" text="Sexo" />
+                  <TableColumn fx:id="colorColumna" prefWidth="75.0" text="Color" />
+                  <TableColumn fx:id="especieColumna" prefWidth="79.20001220703125" text="Especie" />
+                  <TableColumn fx:id="razaColumna" prefWidth="106.39996337890625" text="Raza" />
+                  <TableColumn fx:id="pesoColumna" prefWidth="52.79998779296875" text="Peso" />
+                  <TableColumn fx:id="caractColumna" prefWidth="132.800048828125" text="Características" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
       <Pane fx:id="paneEditar" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
             <Label layoutX="14.0" layoutY="55.0" text="Sexo:" textFill="#e03616">
@@ -80,6 +94,58 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneInsertar" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <TextField fx:id="fieldNombreAlta" layoutX="14.0" layoutY="63.0" promptText="Nombre" />
+            <ComboBox fx:id="sexoBoxAlta" layoutX="13.0" layoutY="128.0" prefWidth="150.0" promptText="Sexo" />
+            <ComboBox fx:id="razaBoxAlta" layoutX="190.0" layoutY="128.0" prefWidth="150.0" promptText="Raza" />
+            <TextField fx:id="pesoFieldAlta" layoutX="363.0" layoutY="63.0" promptText="Peso" />
+            <TextArea fx:id="caractFieldAlta" layoutX="363.0" layoutY="128.0" prefHeight="64.0" prefWidth="200.0" promptText="Características..." />
+            <Button layoutX="489.0" layoutY="253.0" mnemonicParsing="false" onAction="#subirAnimal" stylesheets="@../css/dash.css" text="Dar de alta" />
+            <Label fx:id="lblErrorAlta" layoutX="316.0" layoutY="223.0" text="Rellene todos los campos de forma correcta" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="fechaNac" layoutX="44.0" layoutY="211.0" promptText="Fecha nacimiento" />
+            <Label layoutX="14.0" layoutY="28.0" text="Nombre:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="191.0" layoutY="28.0" text="Color:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="363.0" layoutY="28.0" text="Peso:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="93.0" text="Sexo:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="188.0" layoutY="93.0" text="Raza:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="363.0" layoutY="93.0" text="Características:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="166.0" text="Fecha de nacimiento:" textFill="#e03616">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboColorAlta" layoutX="190.0" layoutY="63.0" prefWidth="150.0" promptText="Color" />
          </children>
       </Pane>
       <Pane fx:id="paneBuscar" layoutY="93.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
@@ -199,14 +265,43 @@
             <Button fx:id="adoptar" layoutX="206.0" layoutY="59.0" mnemonicParsing="false" onAction="#actionAdoptar" stylesheets="@../css/dash.css" text="Adoptar" textFill="#f5f3f4" />
          </children>
       </Pane>
-      <Pane fx:id="paneIndex" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+      <Pane fx:id="paneIndice" layoutY="96.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Label fx:id="lblImageView" layoutX="41.0" layoutY="237.0" prefHeight="24.0" prefWidth="519.0" text="¡Gracias por confiar en ADOPT ME!, observa estas ofertas!">
+            <Label layoutX="21.0" layoutY="22.0" prefHeight="33.0" prefWidth="247.0" text="¡Bienvenido/a a Adopt Me!">
                <font>
                   <Font name="Caviar Dreams Bold" size="18.0" />
                </font>
             </Label>
-            <ImageView fx:id="imageView" fitHeight="223.0" fitWidth="556.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="21.0" layoutY="55.0" prefHeight="33.0" prefWidth="501.0" text="Para ver la lista de animales pulse el botón de Animales">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="88.0" prefHeight="33.0" prefWidth="501.0" text="Para modificar un animal elíjalo dándole doble clic">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="121.0" prefHeight="33.0" prefWidth="501.0" text="Para dar de alta un animal pulse el botón de Alta">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="154.0" prefHeight="33.0" prefWidth="501.0" text="Para adoptar un animal pulse el botón de Adoptar">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="187.0" prefHeight="33.0" prefWidth="501.0" text="Para buscar un animal pulse el botón de Buscar">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="220.0" prefHeight="33.0" prefWidth="501.0" text="Para filtrar un animal pulse la barra de Filtrar">
+               <font>
+                  <Font name="Caviar Dreams Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="paneAdoptar" layoutX="-1.0" layoutY="93.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
@@ -216,17 +311,17 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Label fx:id="lblPerro" layoutX="14.0" layoutY="14.0" onDragDetected="#perroDetected" onDragDone="#perroDone" text="Perro">
+            <Label fx:id="lblPerro" layoutX="14.0" layoutY="14.0" onDragDetected="#perroDetected" onDragDone="#perroDone" text="Perro" textFill="RED">
                <font>
                   <Font size="48.0" />
                </font>
             </Label>
-            <Label fx:id="lblGato" layoutX="243.0" layoutY="14.0" onDragDetected="#gatoDetected" onDragDone="#gatoDone" text="Gato">
+            <Label fx:id="lblGato" layoutX="243.0" layoutY="14.0" onDragDetected="#gatoDetected" onDragDone="#gatoDone" text="Gato" textFill="RED">
                <font>
                   <Font size="48.0" />
                </font>
             </Label>
-            <Label fx:id="lblAnimal" layoutX="438.0" layoutY="14.0" onDragDetected="#animalDetected" onDragDone="#animalDone" text="Animal">
+            <Label fx:id="lblAnimal" layoutX="438.0" layoutY="14.0" onDragDetected="#animalDetected" onDragDone="#animalDone" text="Animal" textFill="RED">
                <font>
                   <Font size="48.0" />
                </font>
@@ -235,73 +330,11 @@
                <font>
                   <Font name="System Bold" size="28.0" />
                </font></Label>
-         </children>
-      </Pane>
-      <Pane fx:id="paneAdoption" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
-         <children>
-            <TableView fx:id="tableList" prefHeight="300.0" prefWidth="600.0">
-              <columns>
-                <TableColumn fx:id="nameCol" prefWidth="75.0" text="Nombre" />
-                <TableColumn fx:id="genreCol" prefWidth="75.0" text="Sexo" />
-                  <TableColumn fx:id="colorCol" prefWidth="75.0" text="Color" />
-                  <TableColumn fx:id="especieCol" prefWidth="79.20001220703125" text="Especie" />
-                  <TableColumn fx:id="raceCol" prefWidth="106.39996337890625" text="Raza" />
-                  <TableColumn fx:id="weightCol" prefWidth="52.79998779296875" text="Peso" />
-                  <TableColumn fx:id="caractCol" prefWidth="132.800048828125" text="Características" />
-              </columns>
-            </TableView>
-         </children>
-      </Pane>
-      <Pane fx:id="paneInsertar" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
-         <children>
-            <TextField fx:id="fieldNombreAlta" layoutX="14.0" layoutY="63.0" promptText="Nombre" />
-            <ComboBox fx:id="sexoBoxAlta" layoutX="13.0" layoutY="128.0" prefWidth="150.0" promptText="Sexo" />
-            <ComboBox fx:id="razaBoxAlta" layoutX="190.0" layoutY="128.0" prefWidth="150.0" promptText="Raza" />
-            <TextField fx:id="pesoFieldAlta" layoutX="363.0" layoutY="63.0" promptText="Peso" />
-            <TextArea fx:id="caractFieldAlta" layoutX="363.0" layoutY="128.0" prefHeight="64.0" prefWidth="200.0" promptText="Características..." />
-            <Button layoutX="489.0" layoutY="253.0" mnemonicParsing="false" onAction="#subirAnimal" stylesheets="@../css/dash.css" text="Dar de alta" />
-            <Label fx:id="lblErrorAlta" layoutX="316.0" layoutY="223.0" text="Rellene todos los campos de forma correcta" textFill="RED" visible="false">
+            <Label layoutX="68.0" layoutY="94.0" text="¡Arrastra para adoptar al animal que llegó antes al refugio!" textFill="RED">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <DatePicker fx:id="fechaNac" layoutX="44.0" layoutY="211.0" promptText="Fecha nacimiento" />
-            <Label layoutX="14.0" layoutY="28.0" text="Nombre:" textFill="#e03616">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="191.0" layoutY="28.0" text="Color:" textFill="#e03616">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="363.0" layoutY="28.0" text="Peso:" textFill="#e03616">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="14.0" layoutY="93.0" text="Sexo:" textFill="#e03616">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="188.0" layoutY="93.0" text="Raza:" textFill="#e03616">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="363.0" layoutY="93.0" text="Características:" textFill="#e03616">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="12.0" layoutY="166.0" text="Fecha de nacimiento:" textFill="#e03616">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="comboColorAlta" layoutX="190.0" layoutY="63.0" prefWidth="150.0" promptText="Color" />
          </children>
       </Pane>
    </children>
