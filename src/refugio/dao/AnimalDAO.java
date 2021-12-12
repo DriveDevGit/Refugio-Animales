@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import refugio.model.Animal;
 import static refugio.model.Animal.toEspecieString;
+import static refugio.model.Animal.toRazaInteger;
 import static refugio.model.Animal.toRazaString;
 import refugio.util.ConnectionManager;
 
@@ -118,7 +119,7 @@ public class AnimalDAO implements GenericoDAO {
         try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement()) {
 
             Animal animal = (Animal) t;
-            
+
             int id = animal.getId();
             String nombre = animal.getNombre();
             String caract = animal.getCaract();
@@ -139,10 +140,9 @@ public class AnimalDAO implements GenericoDAO {
     @Override
     public void get(int idespecie) {
         Object animal = new Animal();
-        try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement(); 
-                Statement sentencia2 = connection.createStatement()) {
-            
-            int id_animal=0;
+        try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement();  Statement sentencia2 = connection.createStatement()) {
+
+            int id_animal = 0;
             LocalDate timeNow = LocalDate.now();
             String fechaAdopcion = timeNow.format(DateTimeFormatter.ISO_DATE);
 
@@ -152,30 +152,103 @@ public class AnimalDAO implements GenericoDAO {
                 while (resultado.next()) {
                     id_animal = resultado.getInt("id");
                 }
-                
-                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='"+fechaAdopcion+"' WHERE id=" + id_animal + ";");
+
+                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='" + fechaAdopcion + "' WHERE id=" + id_animal + ";");
             } else if (idespecie == 2) {
                 ResultSet resultado = sentencia.executeQuery("SELECT * FROM `animal` A JOIN `raza` R ON (A.id_raza_predominante=R.id) WHERE R.idespecie=2 AND fecha_adopcion IS NULL ORDER BY fecha_arribo DESC;");
 
                 while (resultado.next()) {
                     id_animal = resultado.getInt("id");
                 }
-                
-                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='"+fechaAdopcion+"' WHERE id=" + id_animal + ";");
+
+                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='" + fechaAdopcion + "' WHERE id=" + id_animal + ";");
             } else {
                 ResultSet resultado = sentencia.executeQuery("SELECT id FROM `animal` WHERE fecha_adopcion IS NULL ORDER BY fecha_arribo DESC;");
 
                 while (resultado.next()) {
                     id_animal = resultado.getInt("id");
                 }
-                
-                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='"+fechaAdopcion+"' WHERE id=" + id_animal + ";");
+
+                sentencia2.executeUpdate("UPDATE animal SET fecha_adopcion='" + fechaAdopcion + "' WHERE id=" + id_animal + ";");
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("Error");
         }
+    }
+
+    @Override
+    public Collection search(int nCampos, String razaCombo, String colorCombo) {
+        List animales = new ArrayList();
+        Animal animalBuscado = null;
+
+        try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement()) {
+
+            String colorSeleccionado=colorCombo;
+            int razaSeleccionada=toRazaInteger(razaCombo);
+            
+            if (nCampos == 2) {
+                ResultSet resultado = sentencia.executeQuery("SELECT A.id, A.nombre, A.sexo, A.fecha_nac, A.color_predominante, R.idespecie, A.id_raza_predominante, A.peso, "
+                        + "A.características FROM `animal` A JOIN `raza` R ON (A.id_raza_predominante=R.id) WHERE `color_predominante`='"+colorSeleccionado+"';");
+
+                while (resultado.next()) {
+                    int id = resultado.getInt("id");
+                    String nombre = resultado.getString("nombre");
+                    char sexo = resultado.getString("sexo").charAt(0);
+                    String fechaNac = resultado.getString("fecha_nac");
+                    String color = resultado.getString("color_predominante");
+                    String especie = toEspecieString(resultado.getInt("idespecie"));
+                    String raza = toRazaString(resultado.getInt("id_raza_predominante"));
+                    double peso = resultado.getDouble("peso");
+                    String caract = resultado.getString("características");
+
+                    animalBuscado = new Animal(id, nombre, sexo, fechaNac, color, especie, raza, peso, caract);
+                    animales.add(animalBuscado);
+                }
+            }else if(nCampos == 1){
+                ResultSet resultado = sentencia.executeQuery("SELECT A.id, A.nombre, A.sexo, A.fecha_nac, A.color_predominante, R.idespecie, A.id_raza_predominante, A.peso, "
+                        + "A.características FROM `animal` A JOIN `raza` R ON (A.id_raza_predominante=R.id) WHERE `id_raza_predominante`='"+razaSeleccionada+"';");
+
+                while (resultado.next()) {
+                    int id = resultado.getInt("id");
+                    String nombre = resultado.getString("nombre");
+                    char sexo = resultado.getString("sexo").charAt(0);
+                    String fechaNac = resultado.getString("fecha_nac");
+                    String color = resultado.getString("color_predominante");
+                    String especie = toEspecieString(resultado.getInt("idespecie"));
+                    String raza = toRazaString(resultado.getInt("id_raza_predominante"));
+                    double peso = resultado.getDouble("peso");
+                    String caract = resultado.getString("características");
+
+                    animalBuscado = new Animal(id, nombre, sexo, fechaNac, color, especie, raza, peso, caract);
+                    animales.add(animalBuscado);
+                }
+            }else if(nCampos == 3){
+                ResultSet resultado = sentencia.executeQuery("SELECT A.id, A.nombre, A.sexo, A.fecha_nac, A.color_predominante, R.idespecie, A.id_raza_predominante, A.peso, "
+                        + "A.características FROM `animal` A JOIN `raza` R ON (A.id_raza_predominante=R.id) WHERE `id_raza_predominante`='"+razaSeleccionada+"' AND `color_predominante`='"+colorSeleccionado+"';");
+
+                while (resultado.next()) {
+                    int id = resultado.getInt("id");
+                    String nombre = resultado.getString("nombre");
+                    char sexo = resultado.getString("sexo").charAt(0);
+                    String fechaNac = resultado.getString("fecha_nac");
+                    String color = resultado.getString("color_predominante");
+                    String especie = toEspecieString(resultado.getInt("idespecie"));
+                    String raza = toRazaString(resultado.getInt("id_raza_predominante"));
+                    double peso = resultado.getDouble("peso");
+                    String caract = resultado.getString("características");
+
+                    animalBuscado = new Animal(id, nombre, sexo, fechaNac, color, especie, raza, peso, caract);
+                    animales.add(animalBuscado);
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.err.println("Error");
+        }
+        return animales;
     }
 
 }

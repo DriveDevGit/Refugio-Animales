@@ -97,4 +97,8 @@ public class AnimalController {
         dao = new AnimalDAO();
         dao.get(idespecie);
     }
+    
+    public void buscar(){
+        
+    }
 }

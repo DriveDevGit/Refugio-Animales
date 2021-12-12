@@ -131,4 +131,9 @@ public class DosisDAO implements GenericoDAO {
     public void get(int id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public Collection search(int nCampos, String colorCombo, String razaCombo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

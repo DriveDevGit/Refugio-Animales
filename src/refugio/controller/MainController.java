@@ -49,85 +49,49 @@ public class MainController implements Initializable {
     private AnimalController AController;
     private boolean tablaMostrada = false;
     private Animal animalClic;
-    
+
     private ObservableList<String> generos = FXCollections.observableArrayList("Macho", "Hembra");
     private ObservableList<String> razas = FXCollections.observableArrayList("Siamés", "Persa", "Siberiano",
             "Bengalí", "Angora Turco", "Siberiano2",
             "Bulldog", "Labrador", "Caniche",
             "Pastor alemán", "Chihuahua", "Terrier",
             "Perro genérico", "Gato genérico");
-    
-    private ObservableList<String> vacunaPerros = FXCollections.observableArrayList("Moquillo", "Parvovirus", "Rabia", 
-                                                                                    "Adenovirus", "Coronavirus", "Leptospira");
+    private ObservableList<String> colores = FXCollections.observableArrayList("Moreno", "Negro", "Gris", "Rubio", "Blanco");
+
+    private ObservableList<String> vacunaPerros = FXCollections.observableArrayList("Moquillo", "Parvovirus", "Rabia",
+            "Adenovirus", "Coronavirus", "Leptospira");
     private ObservableList<String> vacunaGatos = FXCollections.observableArrayList("Coronavirus", "Herpes", "Calcivirus",
-                                                                                   "Panleucopenia", "Peritonitis");
-    
+            "Panleucopenia", "Peritonitis");
     @FXML
-    private FontAwesomeIconView icnClose;
+    private Pane paneBuscar;
     @FXML
-    private Pane banner;
+    private TableView<Animal> tablaBuscar;
     @FXML
-    private Button index;
+    private TableColumn<Animal, String> nombreColumnaBuscar;
     @FXML
-    private TextField search;
+    private TableColumn<Animal, Character> sexoColumnaBuscar;
     @FXML
-    private Button aboutme;
+    private TableColumn<Animal, String> colorColumnaBuscar;
     @FXML
-    private TableView<Animal> tableList;
+    private TableColumn<Animal, String> especieColumnaBuscar;
     @FXML
-    private TableColumn<Animal, String> nameCol;
+    private TableColumn<Animal, String> razaColumnaBuscar;
     @FXML
-    private TableColumn<Animal, Character> genreCol;
+    private TableColumn<Animal, Double> pesoColumnaBuscar;
     @FXML
-    private TableColumn<Animal, String> colorCol;
+    private TableColumn<Animal, String> caractColumnaBuscar;
     @FXML
-    private TableColumn<Animal, String> raceCol;
+    private ComboBox<String> comboRaza;
     @FXML
-    private TableColumn<Animal, Double> weightCol;
+    private ComboBox<String> comboColor;
     @FXML
-    private TableColumn<Animal, String> caractCol;
+    private Button botonBuscar;
     @FXML
-    private Label lblImageView;
-    @FXML
-    private ImageView imageView;
-    @FXML
-    private Pane paneAdoption;
-    @FXML
-    private Pane paneIndex;
-    @FXML
-    private TableColumn<Animal, String> especieCol;
-    @FXML
-    private Button insert;
-    @FXML
-    private Pane paneInsert;
-    @FXML
-    private TextField fieldNombreAlta;
-    @FXML
-    private ComboBox<String> sexoBoxAlta;
-    @FXML
-    private TextField colorFieldAlta;
-    @FXML
-    private ComboBox<String> razaBoxAlta;
-    @FXML
-    private TextField pesoFieldAlta;
-    @FXML
-    private TextArea caractFieldAlta;
-    @FXML
-    private Label lblErrorAlta;
-    @FXML
-    private DatePicker fechaNac;
+    private Label lblCamposBuscar;
     @FXML
     private Pane paneDatos;
     @FXML
     private Label nombreAnimal;
-    @FXML
-    private Label sexoAnimal;
-    @FXML
-    private Label razaAnimal;
-    @FXML
-    private Label caractAnimal;
-    @FXML
-    private Label fechaNacAnimal;
     @FXML
     private TableView<Dosis> tablaDosis;
     @FXML
@@ -135,23 +99,41 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn<Dosis, String> fechaVacunaColumna;
     @FXML
-    private Button animales;
+    private Label sexoAnimal;
     @FXML
-    private Button adoptar;
+    private Label razaAnimal;
     @FXML
-    private Button botonAdoptar;
+    private Label fechaNacAnimal;
     @FXML
-    private Label lblPerro;
-    @FXML
-    private Label lblGato;
-    @FXML
-    private Label lblAnimal;
-    @FXML
-    private Pane paneAdoptar;
+    private Label caractAnimal;
     @FXML
     private Button editar;
     @FXML
+    private Label idAnimal;
+    @FXML
+    private Pane banner;
+    @FXML
+    private FontAwesomeIconView icnClose;
+    @FXML
+    private Button inicio;
+    @FXML
+    private Button animales;
+    @FXML
+    private TextField filtrar;
+    @FXML
+    private Button buscar;
+    @FXML
+    private Button insertar;
+    @FXML
+    private Button adoptar;
+    @FXML
     private Pane paneEditar;
+    @FXML
+    private Label sexoAnimalE;
+    @FXML
+    private Label razaAnimalE;
+    @FXML
+    private Label fechaNacAnimalE;
     @FXML
     private Button Hecho;
     @FXML
@@ -163,28 +145,71 @@ public class MainController implements Initializable {
     @FXML
     private Button Insertar;
     @FXML
-    private Label sexoAnimalE;
-    @FXML
-    private Label razaAnimalE;
-    @FXML
-    private Label fechaNacAnimalE;
-    @FXML
-    private Label idAnimal;
-    @FXML
     private Label idAnimalE;
     @FXML
     private Label lblVacunaVacia;
     @FXML
     private Label lblExitoInsertar;
     @FXML
+    private Pane paneIndex;
+    @FXML
+    private Label lblImageView;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private Pane paneAdoptar;
+    @FXML
+    private Button botonAdoptar;
+    @FXML
+    private Label lblPerro;
+    @FXML
+    private Label lblGato;
+    @FXML
+    private Label lblAnimal;
+    @FXML
     private Label lblGracias;
+    @FXML
+    private Pane paneAdoption;
+    @FXML
+    private TableView<Animal> tableList;
+    @FXML
+    private TableColumn<Animal, String> nameCol;
+    @FXML
+    private TableColumn<Animal, Character> genreCol;
+    @FXML
+    private TableColumn<Animal, String> colorCol;
+    @FXML
+    private TableColumn<Animal, String> especieCol;
+    @FXML
+    private TableColumn<Animal, String> raceCol;
+    @FXML
+    private TableColumn<Animal, Double> weightCol;
+    @FXML
+    private TableColumn<Animal, String> caractCol;
+    @FXML
+    private Pane paneInsertar;
+    @FXML
+    private TextField fieldNombreAlta;
+    @FXML
+    private ComboBox<String> sexoBoxAlta;
+    @FXML
+    private ComboBox<String> razaBoxAlta;
+    @FXML
+    private TextField pesoFieldAlta;
+    @FXML
+    private TextArea caractFieldAlta;
+    @FXML
+    private Label lblErrorAlta;
+    @FXML
+    private DatePicker fechaNac;
+    @FXML
+    private ComboBox<String> comboColorAlta;
+
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         paneIndex.toFront();
-
-        sexoBoxAlta.setItems(generos);
-        razaBoxAlta.setItems(razas);
     }
 
     /**
@@ -206,12 +231,12 @@ public class MainController implements Initializable {
      * búsqueda.
      */
     @FXML
-    private void actionListAdoption(ActionEvent event) {
+    private void actionListTable(ActionEvent event) {
         paneAdoption.toFront();
         if (tablaMostrada == false) {
             this.mostrarTabla();
             tablaMostrada = true;
-        }else{
+        } else {
             tablaDosis.getItems().clear();
         }
     }
@@ -221,7 +246,7 @@ public class MainController implements Initializable {
      * @param event ActionListener que nos devolverá a la vista del índice.
      */
     @FXML
-    private void actionIndex(ActionEvent event) {
+    private void actionInicio(ActionEvent event) {
         paneIndex.toFront();
     }
 
@@ -232,12 +257,12 @@ public class MainController implements Initializable {
      * búsqueda.
      */
     @FXML
-    private void clickSearch(MouseEvent event) {
+    private void clicFiltrar(MouseEvent event) {
         paneAdoption.toFront();
         if (tablaMostrada == false) {
             this.mostrarTabla();
             tablaMostrada = true;
-        }else{
+        } else {
             tablaDosis.getItems().clear();
         }
     }
@@ -247,17 +272,32 @@ public class MainController implements Initializable {
      * @param event El ActionListener cambiará a la pestaña de insertar
      */
     @FXML
-    private void actionInsert(ActionEvent event) {
-        paneInsert.toFront();
+    private void actionInsertar(ActionEvent event) {
+        sexoBoxAlta.setItems(generos);
+        razaBoxAlta.setItems(razas);
+        comboColorAlta.setItems(colores);
+        paneInsertar.toFront();
     }
-    
+
     /**
-     * 
+     *
      * @param event El ActionListener cambiará a la pestaña de adoptar.
      */
     @FXML
     private void actionAdoptar(ActionEvent event) {
         paneAdoptar.toFront();
+    }
+          
+    /**
+     * Método que nos llevas a la pestaña de buscar.
+     * 
+     * @param event 
+     */
+    @FXML
+    private void actionBuscar(ActionEvent event) {
+        comboRaza.setItems(razas);
+        comboColor.setItems(colores);
+        paneBuscar.toFront();
     }
 
     /**
@@ -277,7 +317,6 @@ public class MainController implements Initializable {
         tableList.getItems().addAll(animales);
 
         //this.filtrarAnimal();
-
         /**
          * Esta clase interna nos dará la posibilidad de darle doble clic a una
          * fila para poder acceder a un nuevo panel.
@@ -300,14 +339,14 @@ public class MainController implements Initializable {
             return row;
         });
     }
-    
+
     /**
      * Método para filtrar las búsquedas.
      */
-    private void filtrarAnimal(){
-        
-            FilteredList<Animal> datosFiltrados = new FilteredList<>(tableList.getItems(), p -> true);
-            search.textProperty().addListener((observable, oldValue, newValue) -> {
+    private void filtrarAnimal() {
+
+        FilteredList<Animal> datosFiltrados = new FilteredList<>(tableList.getItems(), p -> true);
+        filtrar.textProperty().addListener((observable, oldValue, newValue) -> {
             datosFiltrados.setPredicate(animal -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
@@ -332,7 +371,7 @@ public class MainController implements Initializable {
 
         datosOrdenados.comparatorProperty().bind(tableList.comparatorProperty());
         tableList.setItems(datosOrdenados);
-             
+
     }
 
     /**
@@ -344,28 +383,27 @@ public class MainController implements Initializable {
     private void subirAnimal(ActionEvent event) {
         AController = new AnimalController(dao);
 
-        if (fieldNombreAlta.getText().equals("") || colorFieldAlta.getText().equals("")
-                || pesoFieldAlta.getText().equals("") || caractFieldAlta.getText().equals("")) {
+        if (fieldNombreAlta.getText().equals("") || pesoFieldAlta.getText().equals("") || caractFieldAlta.getText().equals("")) {
             lblErrorAlta.setVisible(true);
-        } else if (sexoBoxAlta.getSelectionModel().isEmpty() || razaBoxAlta.getSelectionModel().isEmpty() || fechaNac.getValue() == null) {
+        } else if (sexoBoxAlta.getSelectionModel().isEmpty() || razaBoxAlta.getSelectionModel().isEmpty() || comboColorAlta.getSelectionModel().isEmpty()
+                || fechaNac.getValue() == null) {
             lblErrorAlta.setVisible(true);
         } else if (pesoFieldAlta.getText().charAt(0) < 48 || pesoFieldAlta.getText().charAt(0) > 57) {
             lblErrorAlta.setVisible(true);
         } else {
-            Animal animal = new Animal(fieldNombreAlta.getText(), sexoBoxAlta.getValue().charAt(0), fechaNac.getValue(), colorFieldAlta.getText(), toRazaInteger(razaBoxAlta.getValue()),
+            Animal animal = new Animal(fieldNombreAlta.getText(), sexoBoxAlta.getValue().charAt(0), fechaNac.getValue(), comboColorAlta.getValue(), toRazaInteger(razaBoxAlta.getValue()),
                     Double.parseDouble(pesoFieldAlta.getText()), caractFieldAlta.getText());
             AController.insertarAnimal(animal);
             AController.vacunasObligatorias();
             lblErrorAlta.setVisible(false);
         }
-
     }
-    
+
     /**
      * Método para actualizar el panel de datos.
-     * 
+     *
      * @param animal
-     * @param dosis 
+     * @param dosis
      */
     private void actualizarPanelDatos(Animal animal, Collection dosis) {
 
@@ -392,26 +430,26 @@ public class MainController implements Initializable {
         fechaVacunaColumna.setCellValueFactory(new PropertyValueFactory<Dosis, String>("Fecha"));
         tablaDosis.getItems().addAll(dosis);
     }
-    
+
     /**
      * Método que nos llevará al panel de modificar.
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void actionEditar(ActionEvent event) {
         paneEditar.toFront();
-        if(animalClic.getEspecie().equals("Perro")){
+        if (animalClic.getEspecie().equals("Perro")) {
             comboVacunas.setItems(vacunaPerros);
-        }else{
+        } else {
             comboVacunas.setItems(vacunaGatos);
-        }   
+        }
     }
-    
+
     /**
      * Método que modificará los datos del animal.
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void actionHecho(ActionEvent event) {
@@ -424,7 +462,7 @@ public class MainController implements Initializable {
             nombre = nombreAnimal.getText(); //Se dejará el nombre anterior
             if (editarCaract.getText().equals("")) { //Si el campo caract está vacío
                 caract = caractAnimal.getText(); //Se dejarán las caract anteriores         
-                
+
             } else {
                 caract = editarCaract.getText(); //Se colocará las nuevas caract
 
@@ -444,34 +482,33 @@ public class MainController implements Initializable {
         tableList.refresh();
         paneAdoption.toFront();
     }
-        
+
     /**
      * Método para insertar cualquier vacuna.
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void actionInsertarVacuna(ActionEvent event) {
         AController = new AnimalController(dao);
-        if (comboVacunas.getSelectionModel().isEmpty()){
+        if (comboVacunas.getSelectionModel().isEmpty()) {
             lblVacunaVacia.setVisible(true);
-        }
-        else{
+        } else {
             lblVacunaVacia.setVisible(false);
             String vacuna = comboVacunas.getValue();
             AController.vacunaNoObligatoria(animalClic, vacuna);
-            lblExitoInsertar.setText("La vacuna "+comboVacunas.getValue()+" ha sido suministrada a "+animalClic.getNombre());
+            lblExitoInsertar.setText("La vacuna " + comboVacunas.getValue() + " ha sido suministrada a " + animalClic.getNombre());
             lblExitoInsertar.setVisible(true);
         }
     }
-    
+
     /**
-     * La siguiente lista de métodos son acciones Drag and Drop, las cuales
-     * se usan para arrastrar ciertos label y poder adoptar un perro, un gato
-     * o un animal
+     * La siguiente lista de métodos son acciones Drag and Drop, las cuales se
+     * usan para arrastrar ciertos label y poder adoptar un perro, un gato o un
+     * animal
      */
     @FXML
-    private void adoptarOver(DragEvent event) {      
+    private void adoptarOver(DragEvent event) {
         if (event.getGestureSource() != lblGracias
                 && event.getDragboard().hasString()) {
 
@@ -490,16 +527,16 @@ public class MainController implements Initializable {
             AController.adoptarAnimal(1);
             System.out.println("Perro");
             success = true;
-        }else if(db.getString().equals("Gato")){
+        } else if (db.getString().equals("Gato")) {
             AController.adoptarAnimal(2);
             System.out.println("Gato");
             success = true;
-        }else if(db.getString().equals("Animal")){
+        } else if (db.getString().equals("Animal")) {
             AController.adoptarAnimal(5);
             System.out.println("Animal");
             success = true;
         }
-        
+
         event.setDropCompleted(success);
         lblGracias.setVisible(true);
         event.consume();
@@ -572,5 +609,40 @@ public class MainController implements Initializable {
 
         event.consume();
         lblAnimal.setText("Animal");
+    }
+
+    @FXML
+    private void botonBuscar(ActionEvent event) {
+        dao = new AnimalDAO();
+        Collection<Animal> animales = null;
+        tablaBuscar.getItems().clear();
+        boolean exito = false;
+        if (comboRaza.getSelectionModel().isEmpty() && comboColor.getSelectionModel().isEmpty()) {
+            lblCamposBuscar.setVisible(true);
+        } else if (!(comboRaza.getSelectionModel().isEmpty()) && comboColor.getSelectionModel().isEmpty()) {
+            animales = dao.search(1, comboRaza.getValue(), "Vacío");
+            lblCamposBuscar.setVisible(false);
+            exito = true;
+        } else if (comboRaza.getSelectionModel().isEmpty() && !(comboColor.getSelectionModel().isEmpty())) {
+            animales = dao.search(2, "Vacío", comboColor.getValue());
+            lblCamposBuscar.setVisible(false);
+            exito = true;
+        } else if (!(comboRaza.getSelectionModel().isEmpty()) && !(comboColor.getSelectionModel().isEmpty())) {
+            animales = dao.search(3, comboRaza.getValue(), comboColor.getValue());
+            lblCamposBuscar.setVisible(false);
+            exito = true;
+        }
+
+        if (exito == true) {
+            nombreColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Nombre"));
+            sexoColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, Character>("Sexo"));
+            colorColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Color"));
+            especieColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Especie"));
+            razaColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Raza"));
+            pesoColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, Double>("Peso"));
+            caractColumnaBuscar.setCellValueFactory(new PropertyValueFactory<Animal, String>("Caract"));
+            tablaBuscar.getItems().addAll(animales);
+        }
+
     }
 }
