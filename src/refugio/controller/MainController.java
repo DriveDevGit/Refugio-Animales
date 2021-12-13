@@ -182,6 +182,8 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn<Animal, String> caractColumna;
     @FXML
+    private TableColumn<Animal, String> adopcionColumna;
+    @FXML
     private Pane paneInsertar;
     @FXML
     private TextField fieldNombreAlta;
@@ -315,6 +317,7 @@ public class MainController implements Initializable {
         razaColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("Raza"));
         pesoColumna.setCellValueFactory(new PropertyValueFactory<Animal, Double>("Peso"));
         caractColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("Caract"));
+        adopcionColumna.setCellValueFactory(new PropertyValueFactory<Animal, String>("FechaAdop"));
         tablaAnimal.getItems().addAll(animales);
          
         /**
@@ -565,15 +568,12 @@ public class MainController implements Initializable {
         boolean success = false;
         if (db.getString().equals("Perro")) {
             AController.adoptarAnimal(1);
-            System.out.println("Perro");
             success = true;
         } else if (db.getString().equals("Gato")) {
             AController.adoptarAnimal(2);
-            System.out.println("Gato");
             success = true;
         } else if (db.getString().equals("Animal")) {
             AController.adoptarAnimal(5);
-            System.out.println("Animal");
             success = true;
         }
 

@@ -60,7 +60,7 @@ public class AnimalDAO implements GenericoDAO {
         try ( Connection connection = ConnectionManager.getInstance().getConnection();  Statement sentencia = connection.createStatement()) {
 
             ResultSet resultado = sentencia.executeQuery("SELECT A.id, A.nombre, A.sexo, A.fecha_nac, A.color_predominante, R.idespecie, "
-                    + "A.id_raza_predominante, A.peso, A.características FROM `animal` A JOIN `raza` R ON (A.id_raza_predominante=R.id)");
+                    + "A.id_raza_predominante, A.peso, A.características, A.fecha_adopcion FROM `animal` A JOIN `raza` R ON (A.id_raza_predominante=R.id)");
 
             while (resultado.next()) {
                 int id = resultado.getInt("id");
@@ -72,8 +72,15 @@ public class AnimalDAO implements GenericoDAO {
                 String raza = toRazaString(resultado.getInt("id_raza_predominante"));
                 double peso = resultado.getDouble("peso");
                 String caract = resultado.getString("características");
+                String fechaAdop="";
+                if(resultado.getString("fecha_adopcion") == null){
+                    fechaAdop="No";
+                }else{
+                    fechaAdop = resultado.getString("fecha_adopcion");
+                }
+                
 
-                Animal animal = new Animal(id, nombre, sexo, fechaNac, color, especie, raza, peso, caract);
+                Animal animal = new Animal(id, nombre, sexo, fechaNac, color, especie, raza, peso, caract, fechaAdop);
                 animales.add(animal);
             }
 

@@ -15,21 +15,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="refugio.controller.MainController">
    <children>
-      <Pane fx:id="paneAdoption" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
-         <children>
-            <TableView fx:id="tablaAnimal" prefHeight="300.0" prefWidth="600.0">
-              <columns>
-                <TableColumn fx:id="nombreColumna" prefWidth="75.0" text="Nombre" />
-                <TableColumn fx:id="sexoColumna" prefWidth="75.0" text="Sexo" />
-                  <TableColumn fx:id="colorColumna" prefWidth="75.0" text="Color" />
-                  <TableColumn fx:id="especieColumna" prefWidth="79.20001220703125" text="Especie" />
-                  <TableColumn fx:id="razaColumna" prefWidth="106.39996337890625" text="Raza" />
-                  <TableColumn fx:id="pesoColumna" prefWidth="52.79998779296875" text="Peso" />
-                  <TableColumn fx:id="caractColumna" prefWidth="132.800048828125" text="Características" />
-              </columns>
-            </TableView>
-         </children>
-      </Pane>
       <Pane fx:id="paneEditar" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
             <Label layoutX="14.0" layoutY="55.0" text="Sexo:" textFill="#e03616">
@@ -335,6 +320,22 @@
                   <Font size="18.0" />
                </font>
             </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneAdoption" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <TableView fx:id="tablaAnimal" prefHeight="300.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="nombreColumna" prefWidth="75.0" text="Nombre" />
+                <TableColumn fx:id="sexoColumna" prefWidth="48.00006103515625" text="Sexo" />
+                  <TableColumn fx:id="colorColumna" prefWidth="65.60003662109375" text="Color" />
+                  <TableColumn fx:id="especieColumna" prefWidth="71.19999694824219" text="Especie" />
+                  <TableColumn fx:id="razaColumna" prefWidth="79.2000732421875" text="Raza" />
+                  <TableColumn fx:id="pesoColumna" prefWidth="52.79998779296875" text="Peso" />
+                  <TableColumn fx:id="caractColumna" prefWidth="115.20001220703125" text="Características" />
+                  <TableColumn fx:id="adopcionColumna" prefWidth="94.4000244140625" text="Adopción" />
+              </columns>
+            </TableView>
          </children>
       </Pane>
    </children>

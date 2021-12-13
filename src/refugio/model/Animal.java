@@ -16,6 +16,7 @@ public class Animal {
     private String nombre;
     private char sexo;
     private String fechaNac;
+    private String fechaAdop;
     private String color;
     private int razaId;
     private String raza;
@@ -33,6 +34,31 @@ public class Animal {
         raza=this.raza;
         peso=this.peso;
         caract=this.caract;
+    }
+    
+    /**
+     * Constructor que nos servirá para recoger todos los datos.
+     * 
+     * @param id
+     * @param nombre
+     * @param sexo
+     * @param fechaNac
+     * @param color
+     * @param raza
+     * @param peso
+     * @param caract 
+     */
+    public Animal(int id, String nombre, char sexo, String fechaNac, String color, String especie, String raza, double peso, String caract, String fechaAdop) {
+        this.id = id;
+        this.nombre = nombre;
+        this.sexo = sexo;
+        this.fechaNac=fechaNac;
+        this.color = color;
+        this.especie = especie;
+        this.raza = raza;
+        this.peso = peso;
+        this.caract = caract;
+        this.fechaAdop = fechaAdop;
     }
     
     /**
@@ -189,6 +215,24 @@ public class Animal {
     public void setEspecie(String especie) {
         this.especie = especie;
     }
+
+    public String getFechaNac() {
+        return fechaNac;
+    }
+
+    public void setFechaNac(String fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
+    public String getFechaAdop() {
+        return fechaAdop;
+    }
+
+    public void setFechaAdop(String fechaAdop) {
+        this.fechaAdop = fechaAdop;
+    }
+    
+    
     
     /**
      * Método que nos convertirá la Id de la especie a String.
